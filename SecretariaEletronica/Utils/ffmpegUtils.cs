@@ -1,0 +1,41 @@
+using System.Diagnostics;
+using System.IO;
+using DSharpPlus.CommandsNext;
+
+namespace SecretariaEletronica.Utils
+{
+    public class FfmpegUtils
+    {
+        public async void ConvertAndDelete(string inputPath, string outputPath, CommandContext ctx)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = "ffmpeg.exe",
+                Arguments = $@"-i {inputPath} -vn -acodec libvorbis -y {outputPath}",
+                RedirectStandardOutput = true,
+                UseShellExecute = false
+            };
+            var ffmpeg = Process.Start(psi);
+            
+            await ffmpeg.WaitForExitAsync();
+
+            await ctx.RespondAsync("Convertido para: " + outputPath);
+            File.Delete(inputPath);
+        }
+
+        public Stream GetffmpegStream(string file)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = "ffmpeg.exe",
+                Arguments = $@"-i ""{file}"" -ac 2 -f s16le -ar 48000 pipe:1",
+                RedirectStandardOutput = true,
+                UseShellExecute = false
+            };
+            var ffmpeg = Process.Start(psi);
+            var ffout = ffmpeg.StandardOutput.BaseStream;
+
+            return ffout;
+        }
+    }
+}

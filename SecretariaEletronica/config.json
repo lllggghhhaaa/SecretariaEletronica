@@ -1,0 +1,7 @@
+{
+  "token": "bot token",
+  "prefix": "!",
+  "lavalink-ip": "127.0.0.1",
+  "lavalink-port": 2333,
+  "lavalink-pass": "lavalinkpassword"
+}
