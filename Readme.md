@@ -102,7 +102,7 @@ namespace SecretariaEletronica.CustomCommands
     }
 }
 ```
-#### [Introduçãodo CommandsNext](https://dsharpplus.github.io/articles/commands/intro.html)
+#### [Introdução do CommandsNext](https://dsharpplus.github.io/articles/commands/intro.html)
 
 #### Após terminar o seu módulo, voce deve compilar ele para **Biblioteca de Classes (.dll)**, e jogá-la dentro de uma pasta chamada `CustomCommands` no diretório do bot, depois ele sera carregado na próxima vez que iniciar o bot
 `Nota: se exister mais de 1 comando repetido, o módulo nao sera carregado`
