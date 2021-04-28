@@ -81,8 +81,8 @@ logging:
     lavalink: INFO
 ```
 
-##Comandos Costumizados
-####No repositório, existe um outro projeto chamado [CommandTemplate](https://github.com/lllggghhhaaa/SecretariaEletronica/tree/master/CommandTemplate), você pode notar que existe apenas uma classe chamada [Main.cs](https://github.com/lllggghhhaaa/SecretariaEletronica/blob/master/CommandTemplate/Main.cs), essa é a base para um módulo de comando
+## Comandos Costumizados
+#### No repositório, existe um outro projeto chamado [CommandTemplate](https://github.com/lllggghhhaaa/SecretariaEletronica/tree/master/CommandTemplate), você pode notar que existe apenas uma classe chamada [Main.cs](https://github.com/lllggghhhaaa/SecretariaEletronica/blob/master/CommandTemplate/Main.cs), essa é a base para um módulo de comando
 ```c#
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
@@ -102,9 +102,9 @@ namespace SecretariaEletronica.CustomCommands
     }
 }
 ```
-####[Introduçãodo CommandsNext](https://dsharpplus.github.io/articles/commands/intro.html)
+#### [Introduçãodo CommandsNext](https://dsharpplus.github.io/articles/commands/intro.html)
 
-####Após terminar o seu módulo, voce deve compilar ele para **Biblioteca de Classes (.dll)**, e jogá-la dentro de uma pasta chamada `CustomCommands` no diretório do bot, depois ele sera carregado na próxima vez que iniciar o bot
+#### Após terminar o seu módulo, voce deve compilar ele para **Biblioteca de Classes (.dll)**, e jogá-la dentro de uma pasta chamada `CustomCommands` no diretório do bot, depois ele sera carregado na próxima vez que iniciar o bot
 `Nota: se exister mais de 1 comando repetido, o módulo nao sera carregado`
 
 
