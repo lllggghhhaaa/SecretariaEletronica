@@ -84,7 +84,3 @@ logging:
 `Minha tag no Discord: lllggghhhaaa#2195`
 ### Documentacao
 #### https://dsharpplus.github.io/
-### Servidor
-
-![DSharpPlus Discord Server](https://discordapp.com/api/guilds/379378609942560770/embed.png?style=banner3) 
-![Discord API Server](https://discordapp.com/api/guilds/81384788765712384/embed.png?style=banner3)
