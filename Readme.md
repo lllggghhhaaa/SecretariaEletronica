@@ -7,7 +7,7 @@
 ## Bot
 ### Instalando
 #### Baixe os [arquivos ja compilados do bot](https://github.com/lllggghhhaaa/SecretariaEletronica/releases/tag/v1.0) ou baixe o código para compilar, para compilar você precisa do [MSBuild](https://docs.microsoft.com/pt-br/visualstudio/msbuild/msbuild?view=vs-2019), ou uma IDE como o [Visual Studio](https://visualstudio.microsoft.com/pt-br/)
-`nota: você precisa do dotnet core 6.0, runtime ou sdk` [Download](https://dotnet.microsoft.com/download/dotnet/6.0)
+`Nota: você precisa do dotnet core 6.0, runtime ou sdk` [Download](https://dotnet.microsoft.com/download/dotnet/6.0)
 #### Crie um arquivo chamado `config.json` no caminho do bot com o seguinte conteúdo
 ```json
 {
@@ -19,7 +19,7 @@
 }
 ```
 ## Lavalink
-#### `nota: essa etapa pode ser pulada, porem um erro irá aparecer e tambem alguns comandos irão parar de funcionar, caso você queira remover esse problema, e necessário alterar o código fonte`
+`Nota: essa etapa pode ser pulada, porem um erro irá aparecer e tambem alguns comandos irão parar de funcionar, caso você queira remover esse problema, e necessário alterar o código fonte`
 ### Requisitos
 #### E necessário ter o `Java` instalado na versão 13 ou superior
 [Donwload Java](https://www.oracle.com/java/technologies/javase-downloads.html)
@@ -80,6 +80,34 @@ logging:
     root: INFO
     lavalink: INFO
 ```
+
+##Comandos Costumizados
+####No repositório, existe um outro projeto chamado [CommandTemplate](https://github.com/lllggghhhaaa/SecretariaEletronica/tree/master/CommandTemplate), você pode notar que existe apenas uma classe chamada [Main.cs](https://github.com/lllggghhhaaa/SecretariaEletronica/blob/master/CommandTemplate/Main.cs), essa é a base para um módulo de comando
+```c#
+using System.Threading.Tasks;
+using DSharpPlus.CommandsNext;
+using DSharpPlus.CommandsNext.Attributes;
+
+namespace SecretariaEletronica.CustomCommands
+{
+    public class Main : BaseCommandModule
+    {
+        // Read command Attributes https://dsharpplus.github.io/articles/commands/command_attributes.html
+        
+        [Command("hello")]
+        public async Task Hello(CommandContext ctx)
+        {
+            await ctx.RespondAsync("hi");
+        }
+    }
+}
+```
+####[Introduçãodo CommandsNext](https://dsharpplus.github.io/articles/commands/intro.html)
+
+####Após terminar o seu módulo, voce deve compilar ele para **Biblioteca de Classes (.dll)**, e jogá-la dentro de uma pasta chamada `CustomCommands` no diretório do bot, depois ele sera carregado na próxima vez que iniciar o bot
+`Nota: se exister mais de 1 comando repetido, o módulo nao sera carregado`
+
+
 ## Ajuda
 `Minha tag no Discord: lllggghhhaaa#2195`
 ### Documentação
