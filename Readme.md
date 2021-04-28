@@ -21,10 +21,10 @@
 ## Lavalink
 `Nota: essa etapa pode ser pulada, porem um erro irá aparecer e tambem alguns comandos irão parar de funcionar, caso você queira remover esse problema, e necessário alterar o código fonte`
 ### Requisitos
-#### E necessário ter o `Java` instalado na versão 13 ou superior
+#### E necessário ter o **Java** instalado na versão **13** ou superior
 [Donwload Java](https://www.oracle.com/java/technologies/javase-downloads.html)
 ### Instalando o lavalink
-#### baixe-o em qualquer lugar do seu computador ou no proprio caminho do bot
+#### baixe-o em qualquer lugar do seu computador ou no próprio caminho do bot
 [Download Lavalink.jar](https://ci.fredboat.com/viewLog.html?buildId=lastSuccessful&buildTypeId=Lavalink_Build&tab=artifacts&guest=1)
 
 #### Crie um arquivo chamado `start.bat` para iniciar o lavalink com o seguinte conteúdo
