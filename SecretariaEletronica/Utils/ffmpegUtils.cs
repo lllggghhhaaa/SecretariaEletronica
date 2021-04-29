@@ -6,6 +6,12 @@ namespace SecretariaEletronica.Utils
 {
     public class FfmpegUtils
     {
+        /// <summary>
+        /// Convert the midea and delete the old midea
+        /// </summary>
+        /// <param name="inputPath"></param>
+        /// <param name="outputPath"></param>
+        /// <param name="ctx"></param>
         public async void ConvertAndDelete(string inputPath, string outputPath, CommandContext ctx)
         {
             var psi = new ProcessStartInfo
@@ -23,6 +29,11 @@ namespace SecretariaEletronica.Utils
             File.Delete(inputPath);
         }
 
+        /// <summary>
+        /// Get the stream of audio file
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         public Stream GetffmpegStream(string file)
         {
             var psi = new ProcessStartInfo
