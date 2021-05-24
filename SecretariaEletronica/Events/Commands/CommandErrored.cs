@@ -15,9 +15,9 @@ namespace SecretariaEletronica.Events.Commands
 
             if (e.Exception is ChecksFailedException)
             {
-                var emoji = DiscordEmoji.FromName(e.Context.Client, ":no_entry:");
+                DiscordEmoji emoji = DiscordEmoji.FromName(e.Context.Client, ":no_entry:");
 
-                var embed = new DiscordEmbedBuilder
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder
                 {
                     Title = "Access denied",
                     Description = $"{emoji} You do not have the permissions required to execute this command.",

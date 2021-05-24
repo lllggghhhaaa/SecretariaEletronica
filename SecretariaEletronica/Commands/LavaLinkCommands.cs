@@ -13,7 +13,7 @@ namespace SecretariaEletronica.Commands
         [Command("join"), Description("Join to channel with LavaLink")]
         public async Task JoinLavaLink(CommandContext ctx, DiscordChannel channel = null)
         {
-            var vstat = ctx.Member?.VoiceState;
+            DiscordVoiceState vstat = ctx.Member?.VoiceState;
             if (vstat?.Channel == null && channel == null)
             {
                 await ctx.RespondAsync("You are not in a voice channel.");
@@ -23,14 +23,14 @@ namespace SecretariaEletronica.Commands
             if (channel == null)
                 channel = vstat.Channel;
             
-            var lava = ctx.Client.GetLavalink();
+            LavalinkExtension lava = ctx.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
                 await ctx.RespondAsync("The Lavalink connection is not established");
                 return;
             }
 
-            var node = lava.ConnectedNodes.Values.First();
+            LavalinkNodeConnection node = lava.ConnectedNodes.Values.First();
 
             if (channel.Type != ChannelType.Voice)
             {
@@ -45,14 +45,14 @@ namespace SecretariaEletronica.Commands
         [Command("leave")]
         public async Task LeaveLavaLink(CommandContext ctx, DiscordChannel channel)
         {
-            var lava = ctx.Client.GetLavalink();
+            LavalinkExtension lava = ctx.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
                 await ctx.RespondAsync("The Lavalink connection is not established");
                 return;
             }
 
-            var node = lava.ConnectedNodes.Values.First();
+            LavalinkNodeConnection node = lava.ConnectedNodes.Values.First();
 
             if (channel.Type != ChannelType.Voice)
             {
@@ -60,7 +60,7 @@ namespace SecretariaEletronica.Commands
                 return;
             }
 
-            var conn = node.GetGuildConnection(channel.Guild);
+            LavalinkGuildConnection conn = node.GetGuildConnection(channel.Guild);
 
             if (conn == null)
             {
@@ -90,7 +90,7 @@ namespace SecretariaEletronica.Commands
                 return;
             }
             
-            var loadResult = await node.Rest.GetTracksAsync(search);
+            LavalinkLoadResult loadResult = await node.Rest.GetTracksAsync(search);
 
             if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed 
                 || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)

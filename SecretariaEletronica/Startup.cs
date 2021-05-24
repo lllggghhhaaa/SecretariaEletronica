@@ -24,8 +24,6 @@ namespace SecretariaEletronica
         public IReadOnlyDictionary<int, CommandsNextExtension> Commands { get; set; }
         public IReadOnlyDictionary<int, VoiceNextExtension> Voice { get; set; }
         public IReadOnlyDictionary<int, LavalinkExtension> LavaLink { get; set; }
-        private IMongoClient MongoClient { get; set; }
-        private IMongoDatabase MongoDatabase { get; set; }
         
         public async Task RunBotAsync()
         {
@@ -34,7 +32,7 @@ namespace SecretariaEletronica
             using (StreamReader sr = new StreamReader(fs, new UTF8Encoding(false)))
                 json = await sr.ReadToEndAsync();
 
-            var cfgjson = JsonConvert.DeserializeObject<ConfigJson>(json);
+            ConfigJson cfgjson = JsonConvert.DeserializeObject<ConfigJson>(json);
             
             DiscordConfiguration cfg = new DiscordConfiguration
             {
@@ -51,17 +49,13 @@ namespace SecretariaEletronica
                 MinimumLogLevel = LogLevel.Debug,
                 LogTimestampFormat = "dd MMM yyy - hh:mm:ss"
             };
-
-            MongoClient = new MongoClient($"mongodb://localhost:27017");
-            MongoDatabase = MongoClient.GetDatabase("SecretariaEletronica");
             
             Client = new DiscordShardedClient(cfg);
 
             Client.Ready += new Ready(Client).Client_Ready;
             Client.GuildAvailable += new GuildAvailable(Client).Client_GuildAvailable;
             Client.ClientErrored += new ClientErrored(Client).Client_ClientErrored;
-            Client.MessageCreated += new MessageCreated(MongoDatabase).Client_MessageCreated;
-
+            
             string[] assemblieList = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "CustomCommands"),
                 "*.dll", SearchOption.AllDirectories);
 
@@ -69,12 +63,12 @@ namespace SecretariaEletronica
             
             foreach (string assemblyPath in assemblieList)
             {
-                var assembly = Assembly.LoadFile(assemblyPath);
-                var type = assembly.GetType("SecretariaEletronica.CustomCommands.Main");
+                Assembly assembly = Assembly.LoadFile(assemblyPath);
+                Type? type = assembly.GetType("SecretariaEletronica.CustomCommands.Main");
                 typesToRegister.Add(type);
             }
 
-            var commandcfg = new CommandsNextConfiguration
+            CommandsNextConfiguration commandcfg = new CommandsNextConfiguration
             {
                 StringPrefixes = new[] { cfgjson.CommandPrefix },
                 EnableDms = true,

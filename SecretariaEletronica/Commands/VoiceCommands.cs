@@ -15,21 +15,21 @@ namespace SecretariaEletronica.Commands
         [Command("joinVN"), Description("Joins a voice channel.")]
         public async Task Join(CommandContext ctx, DiscordChannel chn = null)
         {
-            var vnext = ctx.Client.GetVoiceNext();
+            VoiceNextExtension vnext = ctx.Client.GetVoiceNext();
             if (vnext == null)
             {
                 await ctx.RespondAsync("VNext is not enabled or configured.");
                 return;
             }
 
-            var vnc = vnext.GetConnection(ctx.Guild);
+            VoiceNextConnection vnc = vnext.GetConnection(ctx.Guild);
             if (vnc != null)
             {
                 await ctx.RespondAsync("Already connected in this guild.");
                 return;
             }
 
-            var vstat = ctx.Member?.VoiceState;
+            DiscordVoiceState vstat = ctx.Member?.VoiceState;
             if (vstat?.Channel == null && chn == null)
             {
                 await ctx.RespondAsync("You are not in a voice channel.");
@@ -46,14 +46,14 @@ namespace SecretariaEletronica.Commands
         [Command("leaveVN"), Description("Leaves a voice channel.")]
         public async Task Leave(CommandContext ctx)
         {
-            var vnext = ctx.Client.GetVoiceNext();
+            VoiceNextExtension vnext = ctx.Client.GetVoiceNext();
             if (vnext == null)
             {
                 await ctx.RespondAsync("VNext is not enabled or configured.");
                 return;
             }
 
-            var vnc = vnext.GetConnection(ctx.Guild);
+            VoiceNextConnection vnc = vnext.GetConnection(ctx.Guild);
             if (vnc == null)
             {
                 await ctx.RespondAsync("Not connected in this guild.");
@@ -69,14 +69,14 @@ namespace SecretariaEletronica.Commands
         {
             string filename = Path.Combine(Directory.GetCurrentDirectory(), "Audios", path);
 
-            var vnext = ctx.Client.GetVoiceNext();
+            VoiceNextExtension vnext = ctx.Client.GetVoiceNext();
             if (vnext == null)
             {
                 await ctx.RespondAsync("VNext is not enabled or configured.");
                 return;
             }
 
-            var vnc = vnext.GetConnection(ctx.Guild);
+            VoiceNextConnection vnc = vnext.GetConnection(ctx.Guild);
             if (vnc == null)
             {
                 await ctx.RespondAsync("Not connected in this guild.");
@@ -101,7 +101,7 @@ namespace SecretariaEletronica.Commands
 
                 Stream ffout = new FfmpegUtils().GetffmpegStream(filename);
 
-                var txStream = vnc.GetTransmitSink();
+                VoiceTransmitSink txStream = vnc.GetTransmitSink();
                 await ffout.CopyToAsync(txStream);
                 await txStream.FlushAsync();
                 await vnc.WaitForPlaybackFinishAsync();
@@ -124,7 +124,7 @@ namespace SecretariaEletronica.Commands
         public async Task ListAudios(CommandContext ctx)
         {
             string message = "Audios:" + Environment.NewLine;
-            var path = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "Audios")).GetFiles();
+            FileInfo[] path = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "Audios")).GetFiles();
             foreach (FileInfo fileInfo in path)
             {
                 message += $"`{fileInfo.Name}`{Environment.NewLine}";

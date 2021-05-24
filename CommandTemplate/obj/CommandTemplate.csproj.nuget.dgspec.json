@@ -1,39 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lgha1\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\CommandTemplate.csproj": {}
+    "/home/userx/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lgha1\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\CommandTemplate.csproj": {
+    "/home/userx/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lgha1\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\CommandTemplate.csproj",
+        "projectUniqueName": "/home/userx/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj",
         "projectName": "CommandTemplate",
-        "projectPath": "C:\\Users\\lgha1\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\CommandTemplate.csproj",
-        "packagesPath": "C:\\Users\\lgha1\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lgha1\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\obj\\",
+        "projectPath": "/home/userx/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj",
+        "packagesPath": "/home/userx/.nuget/packages/",
+        "outputPath": "/home/userx/RiderProjects/SecretariaEletronica/CommandTemplate/obj/",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\lgha1\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "/home/userx/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net5.0"
+          "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://teamcity.monogame.net/guestAuth/app/nuget/feed/_Root/default/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {},
           "https://nuget.emzi0767.com/api/v3/index.json": {}
         },
         "frameworks": {
-          "net5.0": {
-            "targetAlias": "net5.0",
+          "net6.0": {
+            "targetAlias": "net6.0",
             "projectReferences": {}
           }
         },
@@ -44,8 +37,8 @@
         }
       },
       "frameworks": {
-        "net5.0": {
-          "targetAlias": "net5.0",
+        "net6.0": {
+          "targetAlias": "net6.0",
           "dependencies": {
             "DSharpPlus": {
               "target": "Package",
@@ -71,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.3.21202.5\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.100-preview.3.21202.5/RuntimeIdentifierGraph.json"
         }
       }
     }

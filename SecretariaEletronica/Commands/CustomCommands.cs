@@ -34,7 +34,7 @@ namespace SecretariaEletronica.Commands
                     return;
                 }
                 
-                var response = await client.GetAsync(ctx.Message.Attachments[0].Url);
+                HttpResponseMessage response = await client.GetAsync(ctx.Message.Attachments[0].Url);
                 FileStream fs = File.Create(path);
 
                 await response.Content.CopyToAsync(fs);
