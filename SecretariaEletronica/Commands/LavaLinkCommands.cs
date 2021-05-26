@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DSharpPlus;
@@ -5,11 +6,15 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
+using DSharpPlus.Lavalink.EventArgs;
 
 namespace SecretariaEletronica.Commands
 {
     public class LavaLinkCommands : BaseCommandModule
     {
+        private Dictionary<ulong, LavalinkTrack> _guildTracks = new();
+        private Dictionary<ulong, bool> _loopEnabled = new();
+        
         [Command("join"), Description("Join to channel with LavaLink")]
         public async Task JoinLavaLink(CommandContext ctx, DiscordChannel channel = null)
         {
@@ -39,12 +44,25 @@ namespace SecretariaEletronica.Commands
             }
 
             await node.ConnectAsync(channel);
+            
+            LavalinkGuildConnection conn = node.GetGuildConnection(channel.Guild);
+            conn.PlaybackFinished += ConnOnPlaybackFinished;
+
             await ctx.RespondAsync($"Joined {channel.Name}!");
         }
-        
+
         [Command("leave")]
-        public async Task LeaveLavaLink(CommandContext ctx, DiscordChannel channel)
+        public async Task LeaveLavaLink(CommandContext ctx, DiscordChannel channel = null)
         {
+            DiscordVoiceState vstat = ctx.Member?.VoiceState;
+            if (vstat?.Channel == null && channel == null)
+            {
+                await ctx.RespondAsync("You are not in a voice channel.");
+                return;
+            }
+            if (channel == null)
+                channel = vstat.Channel;
+            
             LavalinkExtension lava = ctx.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
@@ -92,8 +110,7 @@ namespace SecretariaEletronica.Commands
             
             LavalinkLoadResult loadResult = await node.Rest.GetTracksAsync(search);
 
-            if (loadResult.LoadResultType == LavalinkLoadResultType.LoadFailed 
-                || loadResult.LoadResultType == LavalinkLoadResultType.NoMatches)
+            if (loadResult.LoadResultType is LavalinkLoadResultType.LoadFailed or LavalinkLoadResultType.NoMatches)
             {
                 await ctx.RespondAsync($"Track search failed `{search}`.");
                 return;
@@ -102,6 +119,15 @@ namespace SecretariaEletronica.Commands
             LavalinkTrack track = loadResult.Tracks.First();
 
             await conn.PlayAsync(track);
+
+            if (_guildTracks.ContainsKey(ctx.Guild.Id))
+            {
+                _guildTracks[ctx.Guild.Id] = track;
+            }
+            else
+            {
+                _guildTracks.Add(ctx.Guild.Id, track);
+            }
 
             await ctx.RespondAsync($"Now playing `{track.Title}`");
         }
@@ -132,6 +158,44 @@ namespace SecretariaEletronica.Commands
             }
 
             await conn.PauseAsync();
+        }
+
+        [Command("loop"), Description("Enable/Disable loop")]
+        public async Task Loop(CommandContext ctx)
+        {
+            ulong guildId = ctx.Guild.Id;
+            bool enabled;
+            
+            if (_loopEnabled.ContainsKey(guildId))
+            {
+                enabled = !_loopEnabled[guildId];
+                _loopEnabled[guildId] = enabled;
+            }
+            else
+            {
+                _loopEnabled.Add(guildId, true);
+                enabled = true;
+            }
+
+            await ctx.RespondAsync($"loop enabled: `{enabled}`");
+        }
+        
+        private Task ConnOnPlaybackFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
+        {
+            ulong guildId = sender.Guild.Id;
+            if (!_loopEnabled.ContainsKey(guildId)) return Task.CompletedTask;
+            bool isEnabled = _loopEnabled[guildId];
+
+            if (isEnabled)
+            {
+                sender.PlayAsync(_guildTracks[guildId]);
+            }
+            else
+            {
+                _guildTracks.Remove(guildId);
+            }
+            
+            return Task.CompletedTask;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace SecretariaEletronica.Events.Client
         
         public Task Client_ClientErrored(DiscordClient client, ClientErrorEventArgs e)
         {
-            this._client.Logger.LogError(EventIdent.BotEventId, e.Exception, "Exception occured");
+            _client.Logger.LogError(EventIdent.BotEventId, e.Exception, "Exception occured");
 
             return Task.CompletedTask;
         }
