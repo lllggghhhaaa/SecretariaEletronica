@@ -11,7 +11,7 @@ namespace SecretariaEletronica.Events.Commands
     {
         public async Task Commands_CommandErrored(CommandsNextExtension commandsNext, CommandErrorEventArgs e)
         {
-            e.Context.Client.Logger.LogError(EventIdent.BotEventId, $"{e.Context.User.Username} tried executing '{e.Command?.QualifiedName ?? "<unknown command>"}' but it errored: {e.Exception.GetType()}: {e.Exception.Message ?? "<no message>"}", DateTime.Now);
+            e.Context.Client.Logger.LogError(EventIdent.BotEventId, $"{e.Context.User.Username} tried executing '{e.Command?.QualifiedName ?? "<unknown command>"}' but it errored: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
 
             if (e.Exception is ChecksFailedException)
             {

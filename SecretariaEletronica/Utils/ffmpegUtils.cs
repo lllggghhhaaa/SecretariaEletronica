@@ -21,7 +21,7 @@ namespace SecretariaEletronica.Utils
                 RedirectStandardOutput = true,
                 UseShellExecute = false
             };
-            Process? ffmpeg = Process.Start(psi);
+            Process ffmpeg = Process.Start(psi);
             
             await ffmpeg.WaitForExitAsync();
 

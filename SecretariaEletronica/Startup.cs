@@ -10,7 +10,6 @@ using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using DSharpPlus.VoiceNext;
 using Microsoft.Extensions.Logging;
-using MongoDB.Driver;
 using Newtonsoft.Json;
 using SecretariaEletronica.Commands;
 using SecretariaEletronica.Events.Client;
@@ -64,7 +63,7 @@ namespace SecretariaEletronica
             foreach (string assemblyPath in assemblieList)
             {
                 Assembly assembly = Assembly.LoadFile(assemblyPath);
-                Type? type = assembly.GetType("SecretariaEletronica.CustomCommands.Main");
+                Type type = assembly.GetType("SecretariaEletronica.CustomCommands.Main");
                 typesToRegister.Add(type);
             }
 

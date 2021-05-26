@@ -39,7 +39,7 @@ namespace SecretariaEletronica.Commands
             if (chn == null)
                 chn = vstat.Channel;
 
-            vnc = await vnext.ConnectAsync(chn);
+            await vnext.ConnectAsync(chn);
             await ctx.RespondAsync($"Connected to `{chn.Name}`");
         }
 
