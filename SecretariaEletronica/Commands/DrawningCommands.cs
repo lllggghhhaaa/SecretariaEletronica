@@ -25,9 +25,9 @@ namespace SecretariaEletronica.Commands
                 {
                     Bitmap reversed = new Bitmap(stream);
 
-                    for (int y = 0; (y <= (reversed.Height - 1)); y++)
+                    for (int y = 0; y < reversed.Height; y++)
                     {
-                        for (int x = 0; (x <= (reversed.Width - 1)); x++)
+                        for (int x = 0; x < reversed.Width; x++)
                         {
                             Color inv = reversed.GetPixel(x, y);
                             inv = Color.FromArgb(255, (255 - inv.R), (255 - inv.G), (255 - inv.B));
