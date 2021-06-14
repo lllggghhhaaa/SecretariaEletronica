@@ -22,6 +22,7 @@
         "sources": {
           "http://teamcity.monogame.net/guestAuth/app/nuget/feed/_Root/default/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {},
+          "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {},
           "https://nuget.emzi0767.com/api/v3/index.json": {}
         },
         "frameworks": {
@@ -42,11 +43,23 @@
           "dependencies": {
             "DSharpPlus": {
               "target": "Package",
-              "version": "[4.0.0-rc2, )"
+              "version": "[4.1.0-nightly-00883, )"
             },
             "DSharpPlus.CommandsNext": {
               "target": "Package",
-              "version": "[4.0.0-rc2, )"
+              "version": "[4.1.0-nightly-00883, )"
+            },
+            "DSharpPlus.Interactivity": {
+              "target": "Package",
+              "version": "[4.1.0-nightly-00883, )"
+            },
+            "DSharpPlus.Lavalink": {
+              "target": "Package",
+              "version": "[4.1.0-nightly-00883, )"
+            },
+            "DSharpPlus.VoiceNext": {
+              "target": "Package",
+              "version": "[4.1.0-nightly-00883, )"
             }
           },
           "imports": [

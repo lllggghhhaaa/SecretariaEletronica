@@ -43,8 +43,8 @@ namespace SecretariaEletronica.Utils
                 RedirectStandardOutput = true,
                 UseShellExecute = false
             };
-            Process? ffmpeg = Process.Start(psi);
-            Stream ffout = ffmpeg.StandardOutput.BaseStream;
+            Process ffmpeg = Process.Start(psi);
+            Stream ffout = ffmpeg?.StandardOutput.BaseStream;
 
             return ffout;
         }

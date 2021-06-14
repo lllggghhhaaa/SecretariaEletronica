@@ -87,6 +87,7 @@ namespace SecretariaEletronica
                 cmdNext.RegisterCommands<MiscCommands>();
                 cmdNext.RegisterCommands<ModeratorCommands>();
                 cmdNext.RegisterCommands<VoiceCommands>();
+                cmdNext.RegisterCommands<WaxCommands>();
                 
                 foreach (Type type in typesToRegister)
                 {

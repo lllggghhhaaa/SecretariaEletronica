@@ -2,12 +2,21 @@
   "version": 3,
   "targets": {
     "net6.0": {
-      "DSharpPlus/4.0.0-rc2": {
+      "ConcurrentHashSet/1.1.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/ConcurrentCollections.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/ConcurrentCollections.dll": {}
+        }
+      },
+      "DSharpPlus/4.1.0-nightly-00883": {
         "type": "package",
         "dependencies": {
-          "Emzi0767.Common": "2.3.0",
+          "Emzi0767.Common": "2.6.2",
           "Microsoft.Extensions.Logging.Abstractions": "5.0.0",
-          "Newtonsoft.Json": "12.0.3",
+          "Newtonsoft.Json": "13.0.1",
           "System.Memory": "4.5.4",
           "System.Net.Http": "4.3.4",
           "System.Net.WebSockets": "4.3.0",
@@ -21,10 +30,10 @@
           "lib/netstandard2.0/DSharpPlus.dll": {}
         }
       },
-      "DSharpPlus.CommandsNext/4.0.0-rc2": {
+      "DSharpPlus.CommandsNext/4.1.0-nightly-00883": {
         "type": "package",
         "dependencies": {
-          "DSharpPlus": "4.0.0-rc2",
+          "DSharpPlus": "4.1.0-nightly-00883",
           "Microsoft.Extensions.DependencyInjection": "5.0.1"
         },
         "compile": {
@@ -34,12 +43,72 @@
           "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {}
         }
       },
-      "Emzi0767.Common/2.3.0": {
+      "DSharpPlus.Interactivity/4.1.0-nightly-00883": {
         "type": "package",
         "dependencies": {
-          "System.Collections.Immutable": "1.7.0",
+          "ConcurrentHashSet": "1.1.0",
+          "DSharpPlus": "4.1.0-nightly-00883"
+        },
+        "compile": {
+          "lib/netstandard2.0/DSharpPlus.Interactivity.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/DSharpPlus.Interactivity.dll": {}
+        }
+      },
+      "DSharpPlus.Lavalink/4.1.0-nightly-00883": {
+        "type": "package",
+        "dependencies": {
+          "DSharpPlus": "4.1.0-nightly-00883"
+        },
+        "compile": {
+          "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {}
+        }
+      },
+      "DSharpPlus.VoiceNext/4.1.0-nightly-00883": {
+        "type": "package",
+        "dependencies": {
+          "DSharpPlus": "4.1.0-nightly-00883",
+          "DSharpPlus.VoiceNext.Natives": "1.0.0",
+          "System.Threading.Channels": "5.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/DSharpPlus.VoiceNext.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/DSharpPlus.VoiceNext.dll": {}
+        }
+      },
+      "DSharpPlus.VoiceNext.Natives/1.0.0": {
+        "type": "package",
+        "runtimeTargets": {
+          "runtimes/win-x64/native/libopus.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x64/native/libsodium.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/libopus.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          },
+          "runtimes/win-x86/native/libsodium.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
+      "Emzi0767.Common/2.6.2": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections.Immutable": "5.0.0",
           "System.Memory": "4.5.4",
-          "System.Runtime.CompilerServices.Unsafe": "4.7.1",
+          "System.Runtime.CompilerServices.Unsafe": "5.0.0",
           "System.ValueTuple": "4.5.0"
         },
         "compile": {
@@ -108,7 +177,7 @@
           "ref/netstandard1.3/_._": {}
         }
       },
-      "Newtonsoft.Json/12.0.3": {
+      "Newtonsoft.Json/13.0.1": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
@@ -320,7 +389,7 @@
           "lib/netstandard1.3/System.Collections.Concurrent.dll": {}
         }
       },
-      "System.Collections.Immutable/1.7.0": {
+      "System.Collections.Immutable/5.0.0": {
         "type": "package",
         "compile": {
           "lib/netstandard2.0/System.Collections.Immutable.dll": {}
@@ -761,10 +830,10 @@
           "ref/netstandard1.5/System.Runtime.dll": {}
         }
       },
-      "System.Runtime.CompilerServices.Unsafe/4.7.1": {
+      "System.Runtime.CompilerServices.Unsafe/5.0.0": {
         "type": "package",
         "compile": {
-          "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
+          "ref/netstandard2.1/System.Runtime.CompilerServices.Unsafe.dll": {}
         },
         "runtime": {
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {}
@@ -1164,6 +1233,15 @@
           "lib/netstandard1.3/System.Threading.dll": {}
         }
       },
+      "System.Threading.Channels/5.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.0/System.Threading.Channels.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/System.Threading.Channels.dll": {}
+        }
+      },
       "System.Threading.Tasks/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -1211,40 +1289,106 @@
     }
   },
   "libraries": {
-    "DSharpPlus/4.0.0-rc2": {
-      "sha512": "XI5cM5SybJs/ybeve62mgZ0uKNnWmcdU6my9uo3wyl/bbI9YkW4lIVuAVnFBgOXOImD+842NOSgygZLWq8dUrw==",
+    "ConcurrentHashSet/1.1.0": {
+      "sha512": "1SuuhZe0wUJbchXdjS23O+quojkw0IXqM9LtUp3RwgQreDI4cj1lfDbdHnD4fOYEnUrftzVIYoonvPlsXm30Bg==",
       "type": "package",
-      "path": "dsharpplus/4.0.0-rc2",
+      "path": "concurrenthashset/1.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "dsharpplus.4.0.0-rc2.nupkg.sha512",
+        "concurrenthashset.1.1.0.nupkg.sha512",
+        "concurrenthashset.nuspec",
+        "lib/net461/ConcurrentCollections.dll",
+        "lib/net461/ConcurrentCollections.xml",
+        "lib/netstandard1.0/ConcurrentCollections.dll",
+        "lib/netstandard1.0/ConcurrentCollections.xml",
+        "lib/netstandard2.0/ConcurrentCollections.dll",
+        "lib/netstandard2.0/ConcurrentCollections.xml"
+      ]
+    },
+    "DSharpPlus/4.1.0-nightly-00883": {
+      "sha512": "MAQnqDIVMqE/3WOKjI0k9qN0Sa/nlnYaekhqmsy6LCJ7fE1QV/2J5wvthHRXqEjBjFEHO7ONlI1kElndhdtmxA==",
+      "type": "package",
+      "path": "dsharpplus/4.1.0-nightly-00883",
+      "files": [
+        ".nupkg.metadata",
+        "dsharpplus.4.1.0-nightly-00883.nupkg.sha512",
         "dsharpplus.nuspec",
         "lib/netstandard2.0/DSharpPlus.dll",
         "lib/netstandard2.0/DSharpPlus.xml"
       ]
     },
-    "DSharpPlus.CommandsNext/4.0.0-rc2": {
-      "sha512": "bwk0lQJ6FIJU3i0WeoyF4rznAh27UW3bgKiz6DfLYGbWsdgGyqHL35q7BR/DGLslli7RpAa476IdhN2ewra40A==",
+    "DSharpPlus.CommandsNext/4.1.0-nightly-00883": {
+      "sha512": "jU3uyzJy1K1wj8xuqmTn4aGX+fibPm4GiWiE2DKsUk6yKoX7ZOGOprpiTxH9mcYz1JCBwvm6jt5tSSH/ng1jRg==",
       "type": "package",
-      "path": "dsharpplus.commandsnext/4.0.0-rc2",
+      "path": "dsharpplus.commandsnext/4.1.0-nightly-00883",
       "files": [
         ".nupkg.metadata",
-        ".signature.p7s",
-        "dsharpplus.commandsnext.4.0.0-rc2.nupkg.sha512",
+        "dsharpplus.commandsnext.4.1.0-nightly-00883.nupkg.sha512",
         "dsharpplus.commandsnext.nuspec",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.dll",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.xml"
       ]
     },
-    "Emzi0767.Common/2.3.0": {
-      "sha512": "BXF/b1E1cYYyYgzwb8ym/yg3I/Tii00pGB3ftKazgx44pWF9koYkkZ1ihZQmIAYOtZTxMSqU056sJc2SBtwiag==",
+    "DSharpPlus.Interactivity/4.1.0-nightly-00883": {
+      "sha512": "KoQsdNt3FFCQPdNFcSMPwUQ7+GMm7Gjerarptw30TsIsdlvB4rgo4A81k26guu6m9k3c7bBgtYhNy+9XhaRrog==",
       "type": "package",
-      "path": "emzi0767.common/2.3.0",
+      "path": "dsharpplus.interactivity/4.1.0-nightly-00883",
+      "files": [
+        ".nupkg.metadata",
+        "dsharpplus.interactivity.4.1.0-nightly-00883.nupkg.sha512",
+        "dsharpplus.interactivity.nuspec",
+        "lib/netstandard2.0/DSharpPlus.Interactivity.dll",
+        "lib/netstandard2.0/DSharpPlus.Interactivity.xml"
+      ]
+    },
+    "DSharpPlus.Lavalink/4.1.0-nightly-00883": {
+      "sha512": "dPo7tbF/q1k6GvZYVxKCNiNFJse9rR1mRDtCyY4gSLCV3aKddnQWVSZKNWF/MRjRzaLwpYUBlWtpBNF0bDSSlQ==",
+      "type": "package",
+      "path": "dsharpplus.lavalink/4.1.0-nightly-00883",
+      "files": [
+        ".nupkg.metadata",
+        "dsharpplus.lavalink.4.1.0-nightly-00883.nupkg.sha512",
+        "dsharpplus.lavalink.nuspec",
+        "lib/netstandard2.0/DSharpPlus.Lavalink.dll",
+        "lib/netstandard2.0/DSharpPlus.Lavalink.xml"
+      ]
+    },
+    "DSharpPlus.VoiceNext/4.1.0-nightly-00883": {
+      "sha512": "6Jpk2v5v+GMxYj2XSqcMx/i3AHU31FBWBZA47vGz4JvYQqR2wk3IpwdY0tIYlYHS21kkeZyROaJ5wZoT5UmRqw==",
+      "type": "package",
+      "path": "dsharpplus.voicenext/4.1.0-nightly-00883",
+      "files": [
+        ".nupkg.metadata",
+        "dsharpplus.voicenext.4.1.0-nightly-00883.nupkg.sha512",
+        "dsharpplus.voicenext.nuspec",
+        "lib/netstandard2.0/DSharpPlus.VoiceNext.dll",
+        "lib/netstandard2.0/DSharpPlus.VoiceNext.xml"
+      ]
+    },
+    "DSharpPlus.VoiceNext.Natives/1.0.0": {
+      "sha512": "U+UtMpommsfh+OOgLYQBy1e+53P/q6/LW18bgIJqsyshhThhiyEH8ISnpESdQrcqEDj6Nud7+FbnNi7N4QtDGw==",
+      "type": "package",
+      "path": "dsharpplus.voicenext.natives/1.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "emzi0767.common.2.3.0.nupkg.sha512",
+        "dsharpplus.voicenext.natives.1.0.0.nupkg.sha512",
+        "dsharpplus.voicenext.natives.nuspec",
+        "runtimes/win-x64/native/libopus.dll",
+        "runtimes/win-x64/native/libsodium.dll",
+        "runtimes/win-x86/native/libopus.dll",
+        "runtimes/win-x86/native/libsodium.dll"
+      ]
+    },
+    "Emzi0767.Common/2.6.2": {
+      "sha512": "/4dew6o2Y8xN0Eu025mDBE/abp/nOVtX59EnZn67ILMqRTk2Mqlnr6oEScSnuLrld8VsIgy+8vURirL6WBpUBA==",
+      "type": "package",
+      "path": "emzi0767.common/2.6.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "emzi0767.common.2.6.2.nupkg.sha512",
         "emzi0767.common.nuspec",
         "lib/net45/Emzi0767.Common.dll",
         "lib/net45/Emzi0767.Common.xml",
@@ -1386,10 +1530,10 @@
         "ref/xamarinwatchos10/_._"
       ]
     },
-    "Newtonsoft.Json/12.0.3": {
-      "sha512": "6mgjfnRB4jKMlzHSl+VD+oUc1IebOZabkbyWj2RiTgWwYPPuaK1H97G1sHqGwPlS5npiF5Q0OrxN1wni2n5QWg==",
+    "Newtonsoft.Json/13.0.1": {
+      "sha512": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A==",
       "type": "package",
-      "path": "newtonsoft.json/12.0.3",
+      "path": "newtonsoft.json/13.0.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1408,11 +1552,7 @@
         "lib/netstandard1.3/Newtonsoft.Json.xml",
         "lib/netstandard2.0/Newtonsoft.Json.dll",
         "lib/netstandard2.0/Newtonsoft.Json.xml",
-        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
-        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
-        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
-        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
-        "newtonsoft.json.12.0.3.nupkg.sha512",
+        "newtonsoft.json.13.0.1.nupkg.sha512",
         "newtonsoft.json.nuspec",
         "packageIcon.png"
       ]
@@ -1777,15 +1917,18 @@
         "system.collections.concurrent.nuspec"
       ]
     },
-    "System.Collections.Immutable/1.7.0": {
-      "sha512": "RVSM6wZUo6L2y6P3vN6gjUtyJ2IF2RVtrepF3J7nrDKfFQd5u/SnSUFclchYQis8/k5scHy9E+fVeKVQLnnkzw==",
+    "System.Collections.Immutable/5.0.0": {
+      "sha512": "FXkLXiK0sVVewcso0imKQoOxjoPAj42R8HtjjbSjVPAzwDfzoyoznWxgA3c38LDbN9SJux1xXoXYAhz98j7r2g==",
       "type": "package",
-      "path": "system.collections.immutable/1.7.0",
+      "path": "system.collections.immutable/5.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/System.Collections.Immutable.dll",
+        "lib/net461/System.Collections.Immutable.xml",
         "lib/netstandard1.0/System.Collections.Immutable.dll",
         "lib/netstandard1.0/System.Collections.Immutable.xml",
         "lib/netstandard1.3/System.Collections.Immutable.dll",
@@ -1794,7 +1937,7 @@
         "lib/netstandard2.0/System.Collections.Immutable.xml",
         "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.dll",
         "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.xml",
-        "system.collections.immutable.1.7.0.nupkg.sha512",
+        "system.collections.immutable.5.0.0.nupkg.sha512",
         "system.collections.immutable.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -3076,18 +3219,18 @@
         "system.runtime.nuspec"
       ]
     },
-    "System.Runtime.CompilerServices.Unsafe/4.7.1": {
-      "sha512": "zOHkQmzPCn5zm/BH+cxC1XbUS3P4Yoi3xzW7eRgVpDR2tPGSzyMZ17Ig1iRkfJuY0nhxkQQde8pgePNiA7z7TQ==",
+    "System.Runtime.CompilerServices.Unsafe/5.0.0": {
+      "sha512": "ZD9TMpsmYJLrxbbmdvhwt9YEgG5WntEnZ/d1eH8JBX9LBp+Ju8BSBhUGbZMNVHHomWo2KVImJhTDl2hIgw/6MA==",
       "type": "package",
-      "path": "system.runtime.compilerservices.unsafe/4.7.1",
+      "path": "system.runtime.compilerservices.unsafe/5.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
-        "lib/net461/System.Runtime.CompilerServices.Unsafe.dll",
-        "lib/net461/System.Runtime.CompilerServices.Unsafe.xml",
+        "lib/net45/System.Runtime.CompilerServices.Unsafe.dll",
+        "lib/net45/System.Runtime.CompilerServices.Unsafe.xml",
         "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll",
         "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.xml",
         "lib/netstandard1.0/System.Runtime.CompilerServices.Unsafe.dll",
@@ -3100,7 +3243,9 @@
         "ref/netstandard1.0/System.Runtime.CompilerServices.Unsafe.xml",
         "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.dll",
         "ref/netstandard2.0/System.Runtime.CompilerServices.Unsafe.xml",
-        "system.runtime.compilerservices.unsafe.4.7.1.nupkg.sha512",
+        "ref/netstandard2.1/System.Runtime.CompilerServices.Unsafe.dll",
+        "ref/netstandard2.1/System.Runtime.CompilerServices.Unsafe.xml",
+        "system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
         "system.runtime.compilerservices.unsafe.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -3987,6 +4132,32 @@
         "system.threading.nuspec"
       ]
     },
+    "System.Threading.Channels/5.0.0": {
+      "sha512": "RLBIxntLaG9pRmmuVDwY1kc8Bvp/FQzSxPU+19VekkScKkWtVP9r8bLhm28ama3usc816UBrmkg3vv3jUea/hw==",
+      "type": "package",
+      "path": "system.threading.channels/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/System.Threading.Channels.dll",
+        "lib/net461/System.Threading.Channels.xml",
+        "lib/netcoreapp3.0/System.Threading.Channels.dll",
+        "lib/netcoreapp3.0/System.Threading.Channels.xml",
+        "lib/netstandard1.3/System.Threading.Channels.dll",
+        "lib/netstandard1.3/System.Threading.Channels.xml",
+        "lib/netstandard2.0/System.Threading.Channels.dll",
+        "lib/netstandard2.0/System.Threading.Channels.xml",
+        "lib/netstandard2.1/System.Threading.Channels.dll",
+        "lib/netstandard2.1/System.Threading.Channels.xml",
+        "system.threading.channels.5.0.0.nupkg.sha512",
+        "system.threading.channels.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
     "System.Threading.Tasks/4.3.0": {
       "sha512": "LbSxKEdOUhVe8BezB/9uOGGppt+nZf6e1VFyw6v3DN6lqitm0OSn2uXMOdtP0M3W4iMcqcivm2J6UgqiwwnXiA==",
       "type": "package",
@@ -4197,8 +4368,11 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "DSharpPlus >= 4.0.0-rc2",
-      "DSharpPlus.CommandsNext >= 4.0.0-rc2"
+      "DSharpPlus >= 4.1.0-nightly-00883",
+      "DSharpPlus.CommandsNext >= 4.1.0-nightly-00883",
+      "DSharpPlus.Interactivity >= 4.1.0-nightly-00883",
+      "DSharpPlus.Lavalink >= 4.1.0-nightly-00883",
+      "DSharpPlus.VoiceNext >= 4.1.0-nightly-00883"
     ]
   },
   "packageFolders": {
@@ -4222,6 +4396,7 @@
       "sources": {
         "http://teamcity.monogame.net/guestAuth/app/nuget/feed/_Root/default/v3/index.json": {},
         "https://api.nuget.org/v3/index.json": {},
+        "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {},
         "https://nuget.emzi0767.com/api/v3/index.json": {}
       },
       "frameworks": {
@@ -4242,11 +4417,23 @@
         "dependencies": {
           "DSharpPlus": {
             "target": "Package",
-            "version": "[4.0.0-rc2, )"
+            "version": "[4.1.0-nightly-00883, )"
           },
           "DSharpPlus.CommandsNext": {
             "target": "Package",
-            "version": "[4.0.0-rc2, )"
+            "version": "[4.1.0-nightly-00883, )"
+          },
+          "DSharpPlus.Interactivity": {
+            "target": "Package",
+            "version": "[4.1.0-nightly-00883, )"
+          },
+          "DSharpPlus.Lavalink": {
+            "target": "Package",
+            "version": "[4.1.0-nightly-00883, )"
+          },
+          "DSharpPlus.VoiceNext": {
+            "target": "Package",
+            "version": "[4.1.0-nightly-00883, )"
           }
         },
         "imports": [

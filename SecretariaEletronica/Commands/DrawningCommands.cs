@@ -38,7 +38,7 @@ namespace SecretariaEletronica.Commands
                     reversed.Save("image.png");
 
                     DiscordMessageBuilder messageBuilder = new DiscordMessageBuilder();
-                    messageBuilder.WithFile("image.png");
+                    messageBuilder.WithFile(File.OpenRead("image.png"));
 
                     await ctx.RespondAsync(messageBuilder);
                 }
@@ -73,7 +73,7 @@ namespace SecretariaEletronica.Commands
                     mimg.Save("image.png");
                     
                     DiscordMessageBuilder messageBuilder = new DiscordMessageBuilder();
-                    messageBuilder.WithFile("image.png");
+                    messageBuilder.WithFile(File.OpenRead("image.png"));
 
                     await ctx.RespondAsync(messageBuilder);
                 }

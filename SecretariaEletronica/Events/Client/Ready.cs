@@ -16,7 +16,7 @@ namespace SecretariaEletronica.Events.Client
         
         public Task Client_Ready(DiscordClient client, ReadyEventArgs e)
         {
-            _client.Logger.LogInformation(EventIdent.BotEventId, "Client is ready to process events.");
+            _client.Logger.LogInformation(EventIdent.BotEventId, "Client is ready to process events");
             
             return Task.CompletedTask;
         }
