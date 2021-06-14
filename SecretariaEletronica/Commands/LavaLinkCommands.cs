@@ -55,11 +55,13 @@ namespace SecretariaEletronica.Commands
         public async Task LeaveLavaLink(CommandContext ctx, DiscordChannel channel = null)
         {
             DiscordVoiceState vstat = ctx.Member?.VoiceState;
+            
             if (vstat?.Channel == null && channel == null)
             {
                 await ctx.RespondAsync("You are not in a voice channel.");
                 return;
             }
+            
             if (channel == null)
                 channel = vstat.Channel;
             
@@ -93,7 +95,10 @@ namespace SecretariaEletronica.Commands
         [Command("play"), Description("Play music with LavaLink"), Aliases("p")]
         public async Task Play(CommandContext ctx, [RemainingText] string search)
         {
-            if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)  
+            DiscordVoiceState vstat = ctx.Member?.VoiceState;
+            DiscordChannel channel = vstat?.Channel;
+            
+            if (ctx.Member?.VoiceState == null || ctx.Member.VoiceState.Channel == null)  
             {
                 await ctx.RespondAsync("You are not in a voice channel.");
                 return;
@@ -104,32 +109,38 @@ namespace SecretariaEletronica.Commands
 
             if (conn == null)
             {
-                await ctx.RespondAsync("Lavalink is not connected.");
-                return;
-            }
-            
-            LavalinkLoadResult loadResult = await node.Rest.GetTracksAsync(search);
+                await node?.ConnectAsync(channel);
+                conn = node?.GetGuildConnection(channel?.Guild);
 
-            if (loadResult.LoadResultType is LavalinkLoadResultType.LoadFailed or LavalinkLoadResultType.NoMatches)
+                if (conn != null) conn.PlaybackFinished += ConnOnPlaybackFinished;
+                else return;
+            }
+
+            if (node?.Rest != null)
             {
-                await ctx.RespondAsync($"Track search failed `{search}`.");
-                return;
+                LavalinkLoadResult loadResult = await node.Rest.GetTracksAsync(search);
+
+                if (loadResult.LoadResultType is LavalinkLoadResultType.LoadFailed or LavalinkLoadResultType.NoMatches)
+                {
+                    await ctx.RespondAsync($"Track search failed `{search}`.");
+                    return;
+                }
+
+                LavalinkTrack track = loadResult.Tracks.First();
+
+                await conn.PlayAsync(track);
+
+                if (_guildTracks.ContainsKey(ctx.Guild.Id))
+                {
+                    _guildTracks[ctx.Guild.Id] = track;
+                }
+                else
+                {
+                    _guildTracks.Add(ctx.Guild.Id, track);
+                }
+
+                await ctx.RespondAsync($"Now playing `{track.Title}`");
             }
-
-            LavalinkTrack track = loadResult.Tracks.First();
-
-            await conn.PlayAsync(track);
-
-            if (_guildTracks.ContainsKey(ctx.Guild.Id))
-            {
-                _guildTracks[ctx.Guild.Id] = track;
-            }
-            else
-            {
-                _guildTracks.Add(ctx.Guild.Id, track);
-            }
-
-            await ctx.RespondAsync($"Now playing `{track.Title}`");
         }
 
         [Command("pause"), Description("Pause music with LavaLink")]

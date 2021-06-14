@@ -23,7 +23,7 @@ namespace SecretariaEletronica.Utils
             };
             Process ffmpeg = Process.Start(psi);
             
-            await ffmpeg.WaitForExitAsync();
+            await ffmpeg?.WaitForExitAsync();
 
             await ctx.RespondAsync("Convertido para: " + outputPath);
             File.Delete(inputPath);
