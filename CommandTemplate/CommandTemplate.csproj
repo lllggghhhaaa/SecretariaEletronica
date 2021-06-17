@@ -11,6 +11,7 @@
       <PackageReference Include="DSharpPlus.Interactivity" Version="4.1.0-nightly-00883" />
       <PackageReference Include="DSharpPlus.Lavalink" Version="4.1.0-nightly-00883" />
       <PackageReference Include="DSharpPlus.VoiceNext" Version="4.1.0-nightly-00883" />
+      <PackageReference Include="MongoDB.Driver" Version="2.13.0-beta1" />
     </ItemGroup>
 
 </Project>

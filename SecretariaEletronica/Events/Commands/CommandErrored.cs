@@ -27,7 +27,7 @@ namespace SecretariaEletronica.Events.Commands
             }
             else if(e.Exception is CommandNotFoundException)
             {
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder
                 {
                     Title = "CommandNotFound",
                     Description = "This command doesnt exist",
@@ -37,7 +37,7 @@ namespace SecretariaEletronica.Events.Commands
             }
             else if(e.Exception is DuplicateCommandException)
             {
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder
                 {
                     Title = "CommandAlreadyExist",
                     Description = "This command already exists, please, change the attachment name",
@@ -47,7 +47,7 @@ namespace SecretariaEletronica.Events.Commands
             }
             else
             {
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder()
+                DiscordEmbedBuilder embed = new DiscordEmbedBuilder
                 {
                     Title = "Error",
                     Description = e.Exception.ToString(),

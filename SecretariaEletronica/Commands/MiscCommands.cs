@@ -16,13 +16,13 @@ namespace SecretariaEletronica.Commands
         [Command("botinfo"), Description("bot information")]
         public async Task BotInfo(CommandContext ctx)
         {
-            DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder()
+            DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder
             {
                 Title = "BotInfo",
                 Description = $"Servers: {ctx.Client.Guilds.Count}\n" +
                               $"Commands: {ctx.Client.GetCommandsNext().RegisteredCommands.Count}\n" +
                               $"Latency: {ctx.Client.Ping}ms\n",
-                Footer = new DiscordEmbedBuilder.EmbedFooter()
+                Footer = new DiscordEmbedBuilder.EmbedFooter
                 {
                     Text = "ⓘ Essa mensagem está disponível apenas para usuários do 𝓓𝓲𝓼𝓬𝓸𝓻𝓭 2 from 𝕄𝕚𝕔𝕣𝕠𝕤𝕠𝕗𝕥",
                     IconUrl = "https://cdn.discordapp.com/attachments/816739970161180692/825816505341837342/discordmicrosoft.png"

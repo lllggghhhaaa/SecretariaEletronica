@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
+using Emzi0767.Utilities;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using Newtonsoft.Json;
 using SecretariaEletronica.Models;
 
@@ -67,6 +71,45 @@ namespace SecretariaEletronica.Commands
 
                 await ctx.RespondAsync(embed.Build());
             }
+        }
+
+        [Command("clipboard")]
+        public async Task ClipBoard(CommandContext ctx, string arg = "0", [RemainingText] string text = "")
+        {
+            IMongoCollection<BsonDocument> collection = Startup.Database.GetCollection<BsonDocument>("clipboard");
+            
+            if (arg == "add")
+            {
+                if (text == String.Empty)
+                {
+                    await ctx.RespondAsync("No text provided");
+                    return;
+                }
+
+                BsonDocument document = new BsonDocument
+                {
+                    { "content", text },
+                    { "author", ctx.User.Id.ToString() },
+                    { "index", collection.CountDocuments(new BsonDocument()).ToString() }
+                };
+
+                await collection.InsertOneAsync(document);
+                await ctx.RespondAsync("Copied!");
+                return;
+            }
+
+            if (!Int32.TryParse(arg, out int id))
+            {
+                id = new Random().Next(0, (int) collection.CountDocuments(new BsonDocument()));
+            }
+
+            if (collection.FindSync(new BsonDocument {{"index", id.ToString()}}).FirstOrDefault() is null)
+            {
+                await ctx.RespondAsync("Error, cannot find index");
+            }
+
+            await ctx.RespondAsync(collection.FindSync(new BsonDocument {{"index", id.ToString()}}).FirstOrDefault()
+                .GetElement("content").Value.AsString);
         }
     }
 }

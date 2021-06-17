@@ -1,8 +1,9 @@
 {
-  "token": "bot token",
-  "prefix": "!",
+  "token": "token",
+  "prefix": [ "!" ],
   "lavalink-ip": "127.0.0.1",
   "lavalink-port": 2334,
   "lavalink-pass": "lavalinkpassword",
-  "rapid-api-key": "rapid api key"
+  "rapid-api-key": "rapidapi key",
+  "mongo-url": "mongodb url C#"
 }

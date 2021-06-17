@@ -22,7 +22,7 @@ namespace SecretariaEletronica.Commands
         {
             object response = CSharpScript.EvaluateAsync(code, ScriptOptions.Default).Result;
 
-            DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder()
+            DiscordEmbedBuilder embedBuilder = new DiscordEmbedBuilder
             {
                 Title = "Terminal >_"
             };

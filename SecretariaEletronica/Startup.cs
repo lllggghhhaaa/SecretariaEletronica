@@ -10,6 +10,8 @@ using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using DSharpPlus.VoiceNext;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson;
+using MongoDB.Driver;
 using Newtonsoft.Json;
 using SecretariaEletronica.Commands;
 using SecretariaEletronica.Events.Client;
@@ -19,20 +21,26 @@ namespace SecretariaEletronica
 {
     public class Startup
     {
-        public DiscordShardedClient Client { get; set; }
-        public IReadOnlyDictionary<int, CommandsNextExtension> Commands { get; set; }
-        public IReadOnlyDictionary<int, VoiceNextExtension> Voice { get; set; }
-        public IReadOnlyDictionary<int, LavalinkExtension> LavaLink { get; set; }
+        public static DiscordShardedClient Client { get; private set; }
+        private static IMongoClient MongoClient;
+        public static IMongoDatabase Database { get; private set; }
+        public static IReadOnlyDictionary<int, CommandsNextExtension> Commands { get; private set; }
+        public static IReadOnlyDictionary<int, VoiceNextExtension> Voice { get; private set; }
+        public static IReadOnlyDictionary<int, LavalinkExtension> LavaLink { get; private set; }
         public static ConfigJson Configuration { get; private set; }
         
         public async Task RunBotAsync()
         {
+            // read config
+            
             string json;
             await using (FileStream fs = File.OpenRead(Path.Combine(Directory.GetCurrentDirectory(), "config.json")))
             using (StreamReader sr = new StreamReader(fs, new UTF8Encoding(false)))
                 json = await sr.ReadToEndAsync();
 
             Configuration = JsonConvert.DeserializeObject<ConfigJson>(json);
+            
+            // setup client
             
             DiscordConfiguration cfg = new DiscordConfiguration
             {
@@ -56,6 +64,8 @@ namespace SecretariaEletronica
             Client.GuildAvailable += new GuildAvailable(Client).Client_GuildAvailable;
             Client.ClientErrored += new ClientErrored(Client).Client_ClientErrored;
 
+            // load custom commands
+            
             List<Type> typesToRegister = new List<Type>();
             
             if(!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "CustomCommands")))
@@ -64,26 +74,28 @@ namespace SecretariaEletronica
             }
             else
             {
-                string[] assemblieList = Directory.GetFiles(
+                string[] assemblyList = Directory.GetFiles(
                     Path.Combine(Directory.GetCurrentDirectory(), "CustomCommands"),
                     "*.dll", SearchOption.AllDirectories);
 
-                foreach (string assemblyPath in assemblieList)
+                foreach (string assemblyPath in assemblyList)
                 {
                     Assembly assembly = Assembly.LoadFile(assemblyPath);
                     Type type = assembly.GetType("SecretariaEletronica.CustomCommands.Main");
                     typesToRegister.Add(type);
                 }
             }
+            
+            // setup commandsnext
 
-            CommandsNextConfiguration commandcfg = new CommandsNextConfiguration
+            CommandsNextConfiguration commandCfg = new CommandsNextConfiguration
             {
-                StringPrefixes = new[] { Configuration.CommandPrefix },
+                StringPrefixes = Configuration.CommandPrefix,
                 EnableDms = true,
                 EnableMentionPrefix = true
             };
 
-            Commands = await Client.UseCommandsNextAsync(commandcfg);
+            Commands = await Client.UseCommandsNextAsync(commandCfg);
 
             foreach (CommandsNextExtension cmdNext in Commands.Values)
             {
@@ -103,6 +115,8 @@ namespace SecretariaEletronica
                     cmdNext.RegisterCommands(type);
                 }
             }
+            
+            // setup lavalink
 
             ConnectionEndpoint endpoint = new ConnectionEndpoint
             {
@@ -120,12 +134,17 @@ namespace SecretariaEletronica
             Voice = await Client.UseVoiceNextAsync(new VoiceNextConfiguration());
             LavaLink = await Client.UseLavalinkAsync();
 
-            await this.Client.StartAsync();
+            await Client.StartAsync();
 
             foreach (LavalinkExtension lava in LavaLink.Values)
             {
                 await lava.ConnectAsync(lavalinkConfig);
             }
+            
+            // setup mongodb
+
+            MongoClient = new MongoClient(Configuration.MongoUrl);
+            Database = MongoClient.GetDatabase("SecretariaEletronica");
             
             await Task.Delay(-1);
         }
@@ -134,15 +153,11 @@ namespace SecretariaEletronica
     public struct ConfigJson
     {
         [JsonProperty("token")] public string Token;
-
-        [JsonProperty("prefix")] public string CommandPrefix;
-
+        [JsonProperty("prefix")] public string[] CommandPrefix;
         [JsonProperty("lavalink-ip")] public string LavaLinkIp;
-
         [JsonProperty("lavalink-port")] public int LavaLinkPort;
-
         [JsonProperty("lavalink-pass")] public string LavaLinkPass;
-
         [JsonProperty("rapid-api-key")] public string RapidApiKey;
+        [JsonProperty("mongo-url")] public string MongoUrl;
     }
 }

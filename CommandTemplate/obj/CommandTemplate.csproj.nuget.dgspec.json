@@ -58,6 +58,10 @@
             "DSharpPlus.VoiceNext": {
               "target": "Package",
               "version": "[4.1.0-nightly-00883, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.13.0-beta1, )"
             }
           },
           "imports": [
@@ -75,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/current/sdk/6.0.100-preview.4.21255.9/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/home/lllggghhhaaa/.dotnet/sdk/6.0.100-preview.4.21255.9/RuntimeIdentifierGraph.json"
         }
       }
     }
