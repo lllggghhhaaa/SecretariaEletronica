@@ -2,8 +2,9 @@
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
+// ReSharper disable once CheckNamespace
 namespace SecretariaEletronica.CustomCommands
-{
+{ 
     public class Main : BaseCommandModule
     {
         // Read command Attributes https://dsharpplus.github.io/articles/commands/command_attributes.html

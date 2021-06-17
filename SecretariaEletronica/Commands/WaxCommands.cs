@@ -1,13 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
-using Emzi0767.Utilities;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
@@ -45,14 +43,14 @@ namespace SecretariaEletronica.Commands
                 Headers =
                 {
                     { "x-rapidapi-key", Startup.Configuration.RapidApiKey },
-                    { "x-rapidapi-host", "google-translate1.p.rapidapi.com" },
+                    { "x-rapidapi-host", "google-translate1.p.rapidapi.com" }
                 },
                 Content = new FormUrlEncodedContent(new Dictionary<string, string>
                 {
                     { "q", text },
                     { "target", target },
-                    { "source", language },
-                }),
+                    { "source", language }
+                })
             };
             using (HttpResponseMessage response = await client.SendAsync(request))
             {
@@ -90,7 +88,7 @@ namespace SecretariaEletronica.Commands
                 {
                     { "content", text },
                     { "author", ctx.User.Id.ToString() },
-                    { "index", collection.CountDocuments(new BsonDocument()).ToString() }
+                    { "index", (await collection.CountDocumentsAsync(new BsonDocument())).ToString() }
                 };
 
                 await collection.InsertOneAsync(document);
@@ -100,12 +98,13 @@ namespace SecretariaEletronica.Commands
 
             if (!Int32.TryParse(arg, out int id))
             {
-                id = new Random().Next(0, (int) collection.CountDocuments(new BsonDocument()));
+                id = new Random().Next(0, (int) await collection.CountDocumentsAsync(new BsonDocument()));
             }
 
             if (collection.FindSync(new BsonDocument {{"index", id.ToString()}}).FirstOrDefault() is null)
             {
                 await ctx.RespondAsync("Error, cannot find index");
+                return;
             }
 
             await ctx.RespondAsync(collection.FindSync(new BsonDocument {{"index", id.ToString()}}).FirstOrDefault()

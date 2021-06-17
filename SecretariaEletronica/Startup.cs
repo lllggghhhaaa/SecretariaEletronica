@@ -10,7 +10,6 @@ using DSharpPlus.Lavalink;
 using DSharpPlus.Net;
 using DSharpPlus.VoiceNext;
 using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using SecretariaEletronica.Commands;
@@ -22,7 +21,7 @@ namespace SecretariaEletronica
     public class Startup
     {
         public static DiscordShardedClient Client { get; private set; }
-        private static IMongoClient MongoClient;
+        private static IMongoClient _mongoClient;
         public static IMongoDatabase Database { get; private set; }
         public static IReadOnlyDictionary<int, CommandsNextExtension> Commands { get; private set; }
         public static IReadOnlyDictionary<int, VoiceNextExtension> Voice { get; private set; }
@@ -143,8 +142,8 @@ namespace SecretariaEletronica
             
             // setup mongodb
 
-            MongoClient = new MongoClient(Configuration.MongoUrl);
-            Database = MongoClient.GetDatabase("SecretariaEletronica");
+            _mongoClient = new MongoClient(Configuration.MongoUrl);
+            Database = _mongoClient.GetDatabase("SecretariaEletronica");
             
             await Task.Delay(-1);
         }
