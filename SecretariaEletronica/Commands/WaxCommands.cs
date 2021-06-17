@@ -40,7 +40,7 @@ namespace SecretariaEletronica.Commands
                 RequestUri = new Uri("https://google-translate1.p.rapidapi.com/language/translate/v2"),
                 Headers =
                 {
-                    { "x-rapidapi-key", "waxKey" },
+                    { "x-rapidapi-key", Startup.Configuration.RapidApiKey },
                     { "x-rapidapi-host", "google-translate1.p.rapidapi.com" },
                 },
                 Content = new FormUrlEncodedContent(new Dictionary<string, string>

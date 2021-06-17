@@ -11,7 +11,7 @@
           "lib/netstandard2.0/ConcurrentCollections.dll": {}
         }
       },
-      "DSharpPlus/4.1.0-nightly-00883": {
+      "DSharpPlus/4.1.0-nightly-00888": {
         "type": "package",
         "dependencies": {
           "Emzi0767.Common": "2.6.2",
@@ -1306,13 +1306,13 @@
         "lib/netstandard2.0/ConcurrentCollections.xml"
       ]
     },
-    "DSharpPlus/4.1.0-nightly-00883": {
-      "sha512": "MAQnqDIVMqE/3WOKjI0k9qN0Sa/nlnYaekhqmsy6LCJ7fE1QV/2J5wvthHRXqEjBjFEHO7ONlI1kElndhdtmxA==",
+    "DSharpPlus/4.1.0-nightly-00888": {
+      "sha512": "CJHmD9vgQz6KpHZ341iGegkmZr6K5MC3TMJEKYjWoMvWoeigmi/mHNuEobxx32Zf7xlapdf/9vNUQZWicr/hrQ==",
       "type": "package",
-      "path": "dsharpplus/4.1.0-nightly-00883",
+      "path": "dsharpplus/4.1.0-nightly-00888",
       "files": [
         ".nupkg.metadata",
-        "dsharpplus.4.1.0-nightly-00883.nupkg.sha512",
+        "dsharpplus.4.1.0-nightly-00888.nupkg.sha512",
         "dsharpplus.nuspec",
         "lib/netstandard2.0/DSharpPlus.dll",
         "lib/netstandard2.0/DSharpPlus.xml"
@@ -4368,7 +4368,7 @@
   },
   "projectFileDependencyGroups": {
     "net6.0": [
-      "DSharpPlus >= 4.1.0-nightly-00883",
+      "DSharpPlus >= 4.1.0-nightly-00888",
       "DSharpPlus.CommandsNext >= 4.1.0-nightly-00883",
       "DSharpPlus.Interactivity >= 4.1.0-nightly-00883",
       "DSharpPlus.Lavalink >= 4.1.0-nightly-00883",
@@ -4376,27 +4376,25 @@
     ]
   },
   "packageFolders": {
-    "/home/userx/.nuget/packages/": {}
+    "/home/lllggghhhaaa/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/userx/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj",
+      "projectUniqueName": "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj",
       "projectName": "CommandTemplate",
-      "projectPath": "/home/userx/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj",
-      "packagesPath": "/home/userx/.nuget/packages/",
-      "outputPath": "/home/userx/RiderProjects/SecretariaEletronica/CommandTemplate/obj/",
+      "projectPath": "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj",
+      "packagesPath": "/home/lllggghhhaaa/.nuget/packages/",
+      "outputPath": "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/CommandTemplate/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/userx/.nuget/NuGet/NuGet.Config"
+        "/home/lllggghhhaaa/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "http://teamcity.monogame.net/guestAuth/app/nuget/feed/_Root/default/v3/index.json": {},
         "https://api.nuget.org/v3/index.json": {},
-        "https://dotnetfeed.blob.core.windows.net/dotnet-core/index.json": {},
         "https://nuget.emzi0767.com/api/v3/index.json": {}
       },
       "frameworks": {
@@ -4417,7 +4415,7 @@
         "dependencies": {
           "DSharpPlus": {
             "target": "Package",
-            "version": "[4.1.0-nightly-00883, )"
+            "version": "[4.1.0-nightly-00888, )"
           },
           "DSharpPlus.CommandsNext": {
             "target": "Package",
@@ -4451,7 +4449,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/6.0.100-preview.3.21202.5/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/snap/dotnet-sdk/current/sdk/6.0.100-preview.4.21255.9/RuntimeIdentifierGraph.json"
       }
     }
   }

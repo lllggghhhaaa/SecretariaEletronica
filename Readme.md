@@ -8,6 +8,7 @@
 ### Instalando
 #### Baixe os [arquivos ja compilados do bot](https://github.com/lllggghhhaaa/SecretariaEletronica/releases/tag/v1.0) ou baixe o código para compilar, para compilar você precisa do [MSBuild](https://docs.microsoft.com/pt-br/visualstudio/msbuild/msbuild?view=vs-2019), ou uma IDE como o [Visual Studio](https://visualstudio.microsoft.com/pt-br/)
 `Nota: você precisa do dotnet core 6.0, runtime ou sdk` [Download](https://dotnet.microsoft.com/download/dotnet/6.0)
+#### Voce tambem precisa adicionar as fontes nuget do DsharpPlus Nightly: `https://nuget.emzi0767.com/api/v3/index.json`
 #### Crie um arquivo chamado `config.json` no caminho do bot com o seguinte conteúdo
 ```json
 {
@@ -18,6 +19,7 @@
   "lavalink-pass": "lavalinkpassword"
 }
 ```
+
 ## Lavalink
 `Nota: essa etapa pode ser pulada, porem um erro irá aparecer e tambem alguns comandos irão parar de funcionar, caso você queira remover esse problema, e necessário alterar o código fonte`
 ### Requisitos

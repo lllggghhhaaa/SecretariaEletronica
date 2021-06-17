@@ -23,6 +23,7 @@ namespace SecretariaEletronica
         public IReadOnlyDictionary<int, CommandsNextExtension> Commands { get; set; }
         public IReadOnlyDictionary<int, VoiceNextExtension> Voice { get; set; }
         public IReadOnlyDictionary<int, LavalinkExtension> LavaLink { get; set; }
+        public static ConfigJson Configuration { get; private set; }
         
         public async Task RunBotAsync()
         {
@@ -31,11 +32,11 @@ namespace SecretariaEletronica
             using (StreamReader sr = new StreamReader(fs, new UTF8Encoding(false)))
                 json = await sr.ReadToEndAsync();
 
-            ConfigJson cfgjson = JsonConvert.DeserializeObject<ConfigJson>(json);
+            Configuration = JsonConvert.DeserializeObject<ConfigJson>(json);
             
             DiscordConfiguration cfg = new DiscordConfiguration
             {
-                Token = cfgjson.Token,
+                Token = Configuration.Token,
                 TokenType = TokenType.Bot,
 
                 Intents = DiscordIntents.GuildMessages
@@ -54,22 +55,30 @@ namespace SecretariaEletronica
             Client.Ready += new Ready(Client).Client_Ready;
             Client.GuildAvailable += new GuildAvailable(Client).Client_GuildAvailable;
             Client.ClientErrored += new ClientErrored(Client).Client_ClientErrored;
-            
-            string[] assemblieList = Directory.GetFiles(Path.Combine(Directory.GetCurrentDirectory(), "CustomCommands"),
-                "*.dll", SearchOption.AllDirectories);
 
             List<Type> typesToRegister = new List<Type>();
             
-            foreach (string assemblyPath in assemblieList)
+            if(!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "CustomCommands")))
             {
-                Assembly assembly = Assembly.LoadFile(assemblyPath);
-                Type type = assembly.GetType("SecretariaEletronica.CustomCommands.Main");
-                typesToRegister.Add(type);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "CustomCommands");
+            }
+            else
+            {
+                string[] assemblieList = Directory.GetFiles(
+                    Path.Combine(Directory.GetCurrentDirectory(), "CustomCommands"),
+                    "*.dll", SearchOption.AllDirectories);
+
+                foreach (string assemblyPath in assemblieList)
+                {
+                    Assembly assembly = Assembly.LoadFile(assemblyPath);
+                    Type type = assembly.GetType("SecretariaEletronica.CustomCommands.Main");
+                    typesToRegister.Add(type);
+                }
             }
 
             CommandsNextConfiguration commandcfg = new CommandsNextConfiguration
             {
-                StringPrefixes = new[] { cfgjson.CommandPrefix },
+                StringPrefixes = new[] { Configuration.CommandPrefix },
                 EnableDms = true,
                 EnableMentionPrefix = true
             };
@@ -97,13 +106,13 @@ namespace SecretariaEletronica
 
             ConnectionEndpoint endpoint = new ConnectionEndpoint
             {
-                Hostname = cfgjson.LavaLinkIp, // From your server configuration.
-                Port = cfgjson.LavaLinkPort // From your server configuration
+                Hostname = Configuration.LavaLinkIp,
+                Port = Configuration.LavaLinkPort
             };
 
             LavalinkConfiguration lavalinkConfig = new LavalinkConfiguration
             {
-                Password = cfgjson.LavaLinkPass, // From your server configuration.
+                Password = Configuration.LavaLinkPass,
                 RestEndpoint = endpoint,
                 SocketEndpoint = endpoint
             };
@@ -124,19 +133,16 @@ namespace SecretariaEletronica
 
     public struct ConfigJson
     {
-        [JsonProperty("token")]
-        public string Token { get; private set; }
+        [JsonProperty("token")] public string Token;
 
-        [JsonProperty("prefix")]
-        public string CommandPrefix { get; private set; }
-        
-        [JsonProperty("lavalink-ip")]
-        public string LavaLinkIp { get; private set; }
-        
-        [JsonProperty("lavalink-port")]
-        public int LavaLinkPort { get; private set; }
-        
-        [JsonProperty("lavalink-pass")]
-        public string LavaLinkPass { get; private set; }
+        [JsonProperty("prefix")] public string CommandPrefix;
+
+        [JsonProperty("lavalink-ip")] public string LavaLinkIp;
+
+        [JsonProperty("lavalink-port")] public int LavaLinkPort;
+
+        [JsonProperty("lavalink-pass")] public string LavaLinkPass;
+
+        [JsonProperty("rapid-api-key")] public string RapidApiKey;
     }
 }
