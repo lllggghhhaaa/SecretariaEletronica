@@ -1,4 +1,4 @@
-//   Copyright 2022 lllggghhhaaa
+﻿//   Copyright 2022 lllggghhhaaa
 //
 //   Licensed under the Apache License, Version 2.0 (the "License");
 //   you may not use this file except in compliance with the License.
@@ -13,31 +13,27 @@
 //   limitations under the License.
 
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
-using Microsoft.Extensions.Logging;
 
 namespace SecretariaEletronica.Events.Client
 {
-    public class Ready
+    public static class GuildCreated
     {
-        public static async Task Client_Ready(DiscordClient client, ReadyEventArgs e)
+        public static async Task Client_GuildCreated(DiscordClient client, GuildCreateEventArgs args)
         {
-            client.Logger.LogInformation(EventIdent.BotEventId, "Client is ready to process events");
-
-            DiscordChannel channel = client.GetChannelAsync(Startup.Configuration.LogReady).Result;
+            DiscordChannel channel = client.GetChannelAsync(Startup.Configuration.LogGuild).Result;
 
             DiscordEmbedBuilder embed = new DiscordEmbedBuilder
             {
-                Title = "Ready",
-                Description = $"Ready at {client.Guilds.Values.Count()} guilds",
-                Timestamp = DateTimeOffset.Now,
-                Color = DiscordColor.Green
+                Title = "Guild Joined",
+                Description = $"+{args.Guild.MemberCount} {args.Guild.Name}",
+                Color = DiscordColor.Green,
+                Timestamp = DateTimeOffset.Now
             };
-            
+
             await channel.SendMessageAsync(embed.Build());
         }
     }

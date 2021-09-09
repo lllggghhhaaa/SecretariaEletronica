@@ -20,7 +20,7 @@
           "lib/netstandard2.1/DnsClient.dll": {}
         }
       },
-      "DSharpPlus/4.1.0-nightly-00888": {
+      "DSharpPlus/4.1.0": {
         "type": "package",
         "dependencies": {
           "Emzi0767.Common": "2.6.2",
@@ -39,10 +39,10 @@
           "lib/netstandard2.0/DSharpPlus.dll": {}
         }
       },
-      "DSharpPlus.CommandsNext/4.1.0-nightly-00883": {
+      "DSharpPlus.CommandsNext/4.1.0": {
         "type": "package",
         "dependencies": {
-          "DSharpPlus": "4.1.0-nightly-00883",
+          "DSharpPlus": "4.1.0",
           "Microsoft.Extensions.DependencyInjection": "5.0.1"
         },
         "compile": {
@@ -52,11 +52,11 @@
           "lib/netstandard2.0/DSharpPlus.CommandsNext.dll": {}
         }
       },
-      "DSharpPlus.Interactivity/4.1.0-nightly-00883": {
+      "DSharpPlus.Interactivity/4.1.0": {
         "type": "package",
         "dependencies": {
           "ConcurrentHashSet": "1.1.0",
-          "DSharpPlus": "4.1.0-nightly-00883"
+          "DSharpPlus": "4.1.0"
         },
         "compile": {
           "lib/netstandard2.0/DSharpPlus.Interactivity.dll": {}
@@ -65,10 +65,10 @@
           "lib/netstandard2.0/DSharpPlus.Interactivity.dll": {}
         }
       },
-      "DSharpPlus.Lavalink/4.1.0-nightly-00883": {
+      "DSharpPlus.Lavalink/4.1.0": {
         "type": "package",
         "dependencies": {
-          "DSharpPlus": "4.1.0-nightly-00883"
+          "DSharpPlus": "4.1.0"
         },
         "compile": {
           "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {}
@@ -77,10 +77,10 @@
           "lib/netstandard2.0/DSharpPlus.Lavalink.dll": {}
         }
       },
-      "DSharpPlus.VoiceNext/4.1.0-nightly-00883": {
+      "DSharpPlus.VoiceNext/4.1.0": {
         "type": "package",
         "dependencies": {
-          "DSharpPlus": "4.1.0-nightly-00883",
+          "DSharpPlus": "4.1.0",
           "DSharpPlus.VoiceNext.Natives": "1.0.0",
           "System.Threading.Channels": "5.0.0"
         },
@@ -2904,61 +2904,71 @@
         "lib/netstandard2.1/DnsClient.xml"
       ]
     },
-    "DSharpPlus/4.1.0-nightly-00888": {
-      "sha512": "CJHmD9vgQz6KpHZ341iGegkmZr6K5MC3TMJEKYjWoMvWoeigmi/mHNuEobxx32Zf7xlapdf/9vNUQZWicr/hrQ==",
+    "DSharpPlus/4.1.0": {
+      "sha512": "s1QTvwMvbTTmIviOaVOyFRH2NAwW9IXMnCzevLrEFV6XFJ3ZnYrF2B03K6iA2U9uChUTZVOSNkhRNcPqqZHzCA==",
       "type": "package",
-      "path": "dsharpplus/4.1.0-nightly-00888",
+      "path": "dsharpplus/4.1.0",
       "files": [
         ".nupkg.metadata",
-        "dsharpplus.4.1.0-nightly-00888.nupkg.sha512",
+        ".signature.p7s",
+        "dsharpplus.4.1.0.nupkg.sha512",
         "dsharpplus.nuspec",
+        "dsharpplus.png",
         "lib/netstandard2.0/DSharpPlus.dll",
         "lib/netstandard2.0/DSharpPlus.xml"
       ]
     },
-    "DSharpPlus.CommandsNext/4.1.0-nightly-00883": {
-      "sha512": "jU3uyzJy1K1wj8xuqmTn4aGX+fibPm4GiWiE2DKsUk6yKoX7ZOGOprpiTxH9mcYz1JCBwvm6jt5tSSH/ng1jRg==",
+    "DSharpPlus.CommandsNext/4.1.0": {
+      "sha512": "4rxtz2pWEsJpPBjtnWEB6q5TmFlKLc7w934CQHS26Ylj85/9k+aYLW7e61TEcsd/+zLjUs7BF82YvlhGKImrZQ==",
       "type": "package",
-      "path": "dsharpplus.commandsnext/4.1.0-nightly-00883",
+      "path": "dsharpplus.commandsnext/4.1.0",
       "files": [
         ".nupkg.metadata",
-        "dsharpplus.commandsnext.4.1.0-nightly-00883.nupkg.sha512",
+        ".signature.p7s",
+        "dsharpplus.commandsnext.4.1.0.nupkg.sha512",
         "dsharpplus.commandsnext.nuspec",
+        "dsharpplus.png",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.dll",
         "lib/netstandard2.0/DSharpPlus.CommandsNext.xml"
       ]
     },
-    "DSharpPlus.Interactivity/4.1.0-nightly-00883": {
-      "sha512": "KoQsdNt3FFCQPdNFcSMPwUQ7+GMm7Gjerarptw30TsIsdlvB4rgo4A81k26guu6m9k3c7bBgtYhNy+9XhaRrog==",
+    "DSharpPlus.Interactivity/4.1.0": {
+      "sha512": "FTQXMqGoWvGMox+UyybL0Jc/P12xTCIUfMRF0n3974Sa5QiwrqhDdP02lHmUS7k7dQF+vMY/YLjLyYdPB7hpFw==",
       "type": "package",
-      "path": "dsharpplus.interactivity/4.1.0-nightly-00883",
+      "path": "dsharpplus.interactivity/4.1.0",
       "files": [
         ".nupkg.metadata",
-        "dsharpplus.interactivity.4.1.0-nightly-00883.nupkg.sha512",
+        ".signature.p7s",
+        "dsharpplus.interactivity.4.1.0.nupkg.sha512",
         "dsharpplus.interactivity.nuspec",
+        "dsharpplus.png",
         "lib/netstandard2.0/DSharpPlus.Interactivity.dll",
         "lib/netstandard2.0/DSharpPlus.Interactivity.xml"
       ]
     },
-    "DSharpPlus.Lavalink/4.1.0-nightly-00883": {
-      "sha512": "dPo7tbF/q1k6GvZYVxKCNiNFJse9rR1mRDtCyY4gSLCV3aKddnQWVSZKNWF/MRjRzaLwpYUBlWtpBNF0bDSSlQ==",
+    "DSharpPlus.Lavalink/4.1.0": {
+      "sha512": "xD53+Y5+Vmy66pttVWD9N7M3io9xo2rwHYvDL2EfOk0u1GAab3nNPB8ALAD4VWcJevSoSWoOBG4rZSfqutCUvg==",
       "type": "package",
-      "path": "dsharpplus.lavalink/4.1.0-nightly-00883",
+      "path": "dsharpplus.lavalink/4.1.0",
       "files": [
         ".nupkg.metadata",
-        "dsharpplus.lavalink.4.1.0-nightly-00883.nupkg.sha512",
+        ".signature.p7s",
+        "dsharpplus.lavalink.4.1.0.nupkg.sha512",
         "dsharpplus.lavalink.nuspec",
+        "dsharpplus.png",
         "lib/netstandard2.0/DSharpPlus.Lavalink.dll",
         "lib/netstandard2.0/DSharpPlus.Lavalink.xml"
       ]
     },
-    "DSharpPlus.VoiceNext/4.1.0-nightly-00883": {
-      "sha512": "6Jpk2v5v+GMxYj2XSqcMx/i3AHU31FBWBZA47vGz4JvYQqR2wk3IpwdY0tIYlYHS21kkeZyROaJ5wZoT5UmRqw==",
+    "DSharpPlus.VoiceNext/4.1.0": {
+      "sha512": "QbuxRaT/1GFoY9pCNraQ2XGLZWFXE8z/FQoXsOpTQqFW4UzC+fVV+2kXVMhuS6zJP+E96MRC2kveIgzwoVXJfA==",
       "type": "package",
-      "path": "dsharpplus.voicenext/4.1.0-nightly-00883",
+      "path": "dsharpplus.voicenext/4.1.0",
       "files": [
         ".nupkg.metadata",
-        "dsharpplus.voicenext.4.1.0-nightly-00883.nupkg.sha512",
+        ".signature.p7s",
+        "dsharpplus.png",
+        "dsharpplus.voicenext.4.1.0.nupkg.sha512",
         "dsharpplus.voicenext.nuspec",
         "lib/netstandard2.0/DSharpPlus.VoiceNext.dll",
         "lib/netstandard2.0/DSharpPlus.VoiceNext.xml"
@@ -9269,26 +9279,28 @@
     ]
   },
   "packageFolders": {
-    "/home/lllggghhhaaa/.nuget/packages/": {}
+    "C:\\Users\\Dell\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/SecretariaEletronica/SecretariaEletronica.csproj",
+      "projectUniqueName": "C:\\Users\\Dell\\RiderProjects\\SecretariaEletronica\\SecretariaEletronica\\SecretariaEletronica.csproj",
       "projectName": "SecretariaEletronica",
-      "projectPath": "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/SecretariaEletronica/SecretariaEletronica.csproj",
-      "packagesPath": "/home/lllggghhhaaa/.nuget/packages/",
-      "outputPath": "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/SecretariaEletronica/obj/",
+      "projectPath": "C:\\Users\\Dell\\RiderProjects\\SecretariaEletronica\\SecretariaEletronica\\SecretariaEletronica.csproj",
+      "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Dell\\RiderProjects\\SecretariaEletronica\\SecretariaEletronica\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/lllggghhhaaa/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
       ],
       "sources": {
-        "https://api.nuget.org/v3/index.json": {},
-        "https://nuget.emzi0767.com/api/v3/index.json": {}
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "http://teamcity.monogame.net/guestAuth/app/nuget/feed/_Root/default/v3/index.json": {},
+        "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net6.0": {
@@ -9359,8 +9371,8 @@
         "warn": true,
         "downloadDependencies": [
           {
-            "name": "Microsoft.NETCore.App.Crossgen2.linux-x64",
-            "version": "[6.0.0-preview.4.21253.7, 6.0.0-preview.4.21253.7]"
+            "name": "Microsoft.NETCore.App.Crossgen2.win-x64",
+            "version": "[6.0.0-preview.7.21377.19, 6.0.0-preview.7.21377.19]"
           }
         ],
         "frameworkReferences": {
@@ -9368,8 +9380,60 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/home/lllggghhhaaa/.dotnet/sdk/6.0.100-preview.4.21255.9/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.7.21379.14\\RuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "SecretariaEletronica depende de DSharpPlus (>= 4.1.0-nightly-00888), mas DSharpPlus 4.1.0-nightly-00888 não foi encontrado. A melhor correspondência aproximada de DSharpPlus 4.1.0 foi resolvida.",
+      "libraryId": "DSharpPlus",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "SecretariaEletronica depende de DSharpPlus.CommandsNext (>= 4.1.0-nightly-00883), mas DSharpPlus.CommandsNext 4.1.0-nightly-00883 não foi encontrado. A melhor correspondência aproximada de DSharpPlus.CommandsNext 4.1.0 foi resolvida.",
+      "libraryId": "DSharpPlus.CommandsNext",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "SecretariaEletronica depende de DSharpPlus.Interactivity (>= 4.1.0-nightly-00883), mas DSharpPlus.Interactivity 4.1.0-nightly-00883 não foi encontrado. A melhor correspondência aproximada de DSharpPlus.Interactivity 4.1.0 foi resolvida.",
+      "libraryId": "DSharpPlus.Interactivity",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "SecretariaEletronica depende de DSharpPlus.Lavalink (>= 4.1.0-nightly-00883), mas DSharpPlus.Lavalink 4.1.0-nightly-00883 não foi encontrado. A melhor correspondência aproximada de DSharpPlus.Lavalink 4.1.0 foi resolvida.",
+      "libraryId": "DSharpPlus.Lavalink",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    },
+    {
+      "code": "NU1603",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "SecretariaEletronica depende de DSharpPlus.VoiceNext (>= 4.1.0-nightly-00883), mas DSharpPlus.VoiceNext 4.1.0-nightly-00883 não foi encontrado. A melhor correspondência aproximada de DSharpPlus.VoiceNext 4.1.0 foi resolvida.",
+      "libraryId": "DSharpPlus.VoiceNext",
+      "targetGraphs": [
+        "net6.0"
+      ]
+    }
+  ]
 }

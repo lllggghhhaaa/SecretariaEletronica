@@ -1,27 +1,29 @@
 {
   "format": 1,
   "restore": {
-    "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj": {}
+    "C:\\Users\\Dell\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\CommandTemplate.csproj": {}
   },
   "projects": {
-    "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj": {
+    "C:\\Users\\Dell\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\CommandTemplate.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj",
+        "projectUniqueName": "C:\\Users\\Dell\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\CommandTemplate.csproj",
         "projectName": "CommandTemplate",
-        "projectPath": "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/CommandTemplate/CommandTemplate.csproj",
-        "packagesPath": "/home/lllggghhhaaa/.nuget/packages/",
-        "outputPath": "/home/lllggghhhaaa/RiderProjects/SecretariaEletronica/CommandTemplate/obj/",
+        "projectPath": "C:\\Users\\Dell\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\CommandTemplate.csproj",
+        "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Dell\\RiderProjects\\SecretariaEletronica\\CommandTemplate\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/lllggghhhaaa/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "https://api.nuget.org/v3/index.json": {},
-          "https://nuget.emzi0767.com/api/v3/index.json": {}
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://teamcity.monogame.net/guestAuth/app/nuget/feed/_Root/default/v3/index.json": {},
+          "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net6.0": {
@@ -79,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/home/lllggghhhaaa/.dotnet/sdk/6.0.100-preview.4.21255.9/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-preview.7.21379.14\\RuntimeIdentifierGraph.json"
         }
       }
     }

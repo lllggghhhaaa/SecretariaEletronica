@@ -1,3 +1,17 @@
+//   Copyright 2022 lllggghhhaaa
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//       You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+//   Unless required by applicable law or agreed to in writing, software
+//       distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//       See the License for the specific language governing permissions and
+//   limitations under the License.
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,22 +26,25 @@ namespace SecretariaEletronica.Commands
 {
     public class LavaLinkCommands : BaseCommandModule
     {
-        private Dictionary<ulong, LavalinkTrack> _guildTracks = new();
+        private Dictionary<ulong, List<LavalinkTrack>> _guildTracks = new();
         private Dictionary<ulong, bool> _loopEnabled = new();
-        
+
+        private Dictionary<bool, string> _loopMessage = new()
+        {
+            { false, "disabled" },
+            { true, "enabled" }
+        };
+
         [Command("join"), Description("Join to channel with LavaLink")]
-        public async Task JoinLavaLink(CommandContext ctx, DiscordChannel channel = null)
+        public async Task JoinLavaLink(CommandContext ctx)
         {
             DiscordVoiceState vstat = ctx.Member?.VoiceState;
-            if (vstat?.Channel == null && channel == null)
+            if (vstat?.Channel == null)
             {
                 await ctx.RespondAsync("You are not in a voice channel.");
                 return;
             }
 
-            if (channel == null)
-                channel = vstat.Channel;
-            
             LavalinkExtension lava = ctx.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
             {
@@ -37,33 +54,29 @@ namespace SecretariaEletronica.Commands
 
             LavalinkNodeConnection node = lava.ConnectedNodes.Values.First();
 
-            if (channel.Type != ChannelType.Voice)
+            if (vstat.Channel.Type != ChannelType.Voice)
             {
                 await ctx.RespondAsync("Not a valid voice channel.");
                 return;
             }
 
-            await node.ConnectAsync(channel);
+            await node.ConnectAsync(vstat.Channel);
             
-            LavalinkGuildConnection conn = node.GetGuildConnection(channel.Guild);
-            conn.PlaybackFinished += ConnOnPlaybackFinished;
+            node.GetGuildConnection(vstat.Channel.Guild).PlaybackFinished += (sender, args) => ConnOnPlaybackFinished(sender, args, false);;
 
-            await ctx.RespondAsync($"Joined {channel.Name}!");
+            await ctx.RespondAsync($"Joined {vstat.Channel.Name}!");
         }
 
         [Command("leave")]
-        public async Task LeaveLavaLink(CommandContext ctx, DiscordChannel channel = null)
+        public async Task LeaveLavaLink(CommandContext ctx)
         {
             DiscordVoiceState vstat = ctx.Member?.VoiceState;
             
-            if (vstat?.Channel == null && channel == null)
+            if (vstat?.Channel == null && vstat.Channel == null)
             {
                 await ctx.RespondAsync("You are not in a voice channel.");
                 return;
             }
-            
-            if (channel == null)
-                channel = vstat.Channel;
             
             LavalinkExtension lava = ctx.Client.GetLavalink();
             if (!lava.ConnectedNodes.Any())
@@ -74,13 +87,13 @@ namespace SecretariaEletronica.Commands
 
             LavalinkNodeConnection node = lava.ConnectedNodes.Values.First();
 
-            if (channel.Type != ChannelType.Voice)
+            if (vstat.Channel.Type != ChannelType.Voice)
             {
                 await ctx.RespondAsync("Not a valid voice channel.");
                 return;
             }
 
-            LavalinkGuildConnection conn = node.GetGuildConnection(channel.Guild);
+            LavalinkGuildConnection conn = node.GetGuildConnection(vstat.Channel.Guild);
 
             if (conn == null)
             {
@@ -88,8 +101,9 @@ namespace SecretariaEletronica.Commands
                 return;
             }
 
+            _guildTracks.Remove(ctx.Guild.Id);
             await conn.DisconnectAsync();
-            await ctx.RespondAsync($"Left {channel.Name}!");
+            await ctx.RespondAsync($"Left {vstat.Channel.Name}!");
         }
         
         [Command("play"), Description("Play music with LavaLink"), Aliases("p")]
@@ -105,18 +119,25 @@ namespace SecretariaEletronica.Commands
             }
             LavalinkExtension lava = ctx.Client.GetLavalink();
             LavalinkNodeConnection node = lava.ConnectedNodes.Values.FirstOrDefault();
-            LavalinkGuildConnection conn = node?.GetGuildConnection(ctx.Member.VoiceState.Guild);
+
+            if (node == null)
+            {
+                await ctx.RespondAsync("Lavalink is not connected.");
+                return;
+            }
+            
+            LavalinkGuildConnection conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
 
             if (conn == null)
             {
-                await node?.ConnectAsync(channel);
-                conn = node?.GetGuildConnection(channel?.Guild);
+                await node.ConnectAsync(channel);
+                conn = node.GetGuildConnection(channel?.Guild);
 
-                if (conn != null) conn.PlaybackFinished += ConnOnPlaybackFinished;
+                if (conn != null) conn.PlaybackFinished += (sender, args) => ConnOnPlaybackFinished(sender, args, false);
                 else return;
             }
 
-            if (node?.Rest != null)
+            if (node.Rest != null)
             {
                 LavalinkLoadResult loadResult = await node.Rest.GetTracksAsync(search);
 
@@ -128,18 +149,17 @@ namespace SecretariaEletronica.Commands
 
                 LavalinkTrack track = loadResult.Tracks.First();
 
-                await conn.PlayAsync(track);
-
                 if (_guildTracks.ContainsKey(ctx.Guild.Id))
                 {
-                    _guildTracks[ctx.Guild.Id] = track;
+                    _guildTracks[ctx.Guild.Id].Add(track);
+                    await ctx.RespondAsync($"Queued `{track.Title}`");
                 }
                 else
                 {
-                    _guildTracks.Add(ctx.Guild.Id, track);
+                    _guildTracks.Add(ctx.Guild.Id, new List<LavalinkTrack> { track });
+                    await conn.PlayAsync(track);
+                    await ctx.RespondAsync($"Now playing `{track.Title}`");
                 }
-
-                await ctx.RespondAsync($"Now playing `{track.Title}`");
             }
         }
 
@@ -171,6 +191,36 @@ namespace SecretariaEletronica.Commands
             await conn.PauseAsync();
         }
 
+        [Command("skip"), Description("Skip the track")]
+        public async Task Skip(CommandContext ctx)
+        {
+            if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
+            {
+                await ctx.RespondAsync("You are not in a voice channel.");
+                return;
+            }
+            
+            LavalinkExtension lava = ctx.Client.GetLavalink();
+            LavalinkNodeConnection node = lava.ConnectedNodes.Values.First();
+            LavalinkGuildConnection conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
+            
+            if (conn == null)
+            {
+                await ctx.RespondAsync("Lavalink is not connected.");
+                return;
+            }
+
+            if (conn.CurrentState.CurrentTrack == null)
+            {
+                await ctx.RespondAsync("There are no tracks loaded.");
+                return;
+            }
+
+            await ConnOnPlaybackFinished(conn, null, true);
+
+            await ctx.RespondAsync("Track skiped");
+        }
+
         [Command("loop"), Description("Enable/Disable loop")]
         public async Task Loop(CommandContext ctx)
         {
@@ -188,25 +238,28 @@ namespace SecretariaEletronica.Commands
                 enabled = true;
             }
 
-            await ctx.RespondAsync($"loop enabled: `{enabled}`");
+            await ctx.RespondAsync($"loop `{_loopMessage[enabled]}`");
         }
         
-        private Task ConnOnPlaybackFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e)
+        private async Task ConnOnPlaybackFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e, bool forceSkip)
         {
             ulong guildId = sender.Guild.Id;
-            if (!_loopEnabled.ContainsKey(guildId)) return Task.CompletedTask;
+            if (!_loopEnabled.ContainsKey(guildId)) _loopEnabled.Add(guildId, false);
             bool isEnabled = _loopEnabled[guildId];
 
-            if (isEnabled)
-            {
-                sender.PlayAsync(_guildTracks[guildId]);
-            }
+            if (isEnabled && !forceSkip)
+                await sender.PlayAsync(_guildTracks[guildId][0]);
             else
             {
-                _guildTracks.Remove(guildId);
+                if (_guildTracks.Count <= 1)
+                {
+                    _guildTracks.Remove(guildId);
+                    return;
+                }
+                _guildTracks[guildId].RemoveAt(0);
+                
+                await sender.PlayAsync(_guildTracks[guildId][0]);
             }
-            
-            return Task.CompletedTask;
         }
     }
 }

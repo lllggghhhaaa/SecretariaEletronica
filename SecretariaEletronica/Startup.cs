@@ -1,5 +1,20 @@
+//   Copyright 2022 lllggghhhaaa
+//
+//   Licensed under the Apache License, Version 2.0 (the "License");
+//   you may not use this file except in compliance with the License.
+//       You may obtain a copy of the License at
+//
+//   http://www.apache.org/licenses/LICENSE-2.0
+// 
+//   Unless required by applicable law or agreed to in writing, software
+//       distributed under the License is distributed on an "AS IS" BASIS,
+//   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//       See the License for the specific language governing permissions and
+//   limitations under the License.
+
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -30,7 +45,16 @@ namespace SecretariaEletronica
         
         public async Task RunBotAsync()
         {
-            // read config
+            // Run LavaLink
+
+            Process llProcess = new Process()
+            {
+                StartInfo = new ProcessStartInfo("java", $"-jar {Path.Combine(Directory.GetCurrentDirectory(), "Lavalink.jar")}")
+            };
+
+            llProcess.Start();
+
+            // Load configuration.
             
             string json;
             await using (FileStream fs = File.OpenRead(Path.Combine(Directory.GetCurrentDirectory(), "config.json")))
@@ -39,7 +63,7 @@ namespace SecretariaEletronica
 
             Configuration = JsonConvert.DeserializeObject<ConfigJson>(json);
             
-            // setup client
+            // Setup client.
             
             DiscordConfiguration cfg = new DiscordConfiguration
             {
@@ -59,11 +83,13 @@ namespace SecretariaEletronica
             
             Client = new DiscordShardedClient(cfg);
 
-            Client.Ready += new Ready(Client).Client_Ready;
-            Client.GuildAvailable += new GuildAvailable(Client).Client_GuildAvailable;
-            Client.ClientErrored += new ClientErrored(Client).Client_ClientErrored;
+            Client.Ready += Ready.Client_Ready;
+            Client.GuildAvailable += GuildAvailable.Client_GuildAvailable;
+            Client.GuildCreated += GuildCreated.Client_GuildCreated;
+            Client.GuildDeleted += GuildDeleted.Client_GuildDeleted;
+            Client.ClientErrored += ClientErrored.Client_ClientErrored;
 
-            // load custom commands
+            // Load custom commands.
             
             List<Type> typesToRegister = new List<Type>();
             
@@ -85,7 +111,7 @@ namespace SecretariaEletronica
                 }
             }
             
-            // setup commandsnext
+            // Setup CommandsNext.
 
             CommandsNextConfiguration commandCfg = new CommandsNextConfiguration
             {
@@ -98,8 +124,8 @@ namespace SecretariaEletronica
 
             foreach (CommandsNextExtension cmdNext in Commands.Values)
             {
-                cmdNext.CommandExecuted += new CommandExecuted().Commands_CommandExecuted;
-                cmdNext.CommandErrored += new CommandErrored().Commands_CommandErrored;
+                cmdNext.CommandExecuted += CommandExecuted.Commands_CommandExecuted;
+                cmdNext.CommandErrored += CommandErrored.Commands_CommandErrored;
                 
                 cmdNext.RegisterCommands<CustomCommands>();
                 cmdNext.RegisterCommands<DrawningCommands>();
@@ -115,7 +141,7 @@ namespace SecretariaEletronica
                 }
             }
             
-            // setup lavalink
+            // Setup LavaLink.
 
             ConnectionEndpoint endpoint = new ConnectionEndpoint
             {
@@ -140,7 +166,7 @@ namespace SecretariaEletronica
                 await lava.ConnectAsync(lavalinkConfig);
             }
             
-            // setup mongodb
+            // Setup MongoDB.
 
             _mongoClient = new MongoClient(Configuration.MongoUrl);
             Database = _mongoClient.GetDatabase("SecretariaEletronica");
@@ -153,6 +179,9 @@ namespace SecretariaEletronica
     {
         [JsonProperty("token")] public string Token;
         [JsonProperty("prefix")] public string[] CommandPrefix;
+        [JsonProperty("log-ready")] public ulong LogReady;
+        [JsonProperty("log-guild")] public ulong LogGuild;
+        [JsonProperty("log-commands")] public ulong LogCommands;
         [JsonProperty("lavalink-ip")] public string LavaLinkIp;
         [JsonProperty("lavalink-port")] public int LavaLinkPort;
         [JsonProperty("lavalink-pass")] public string LavaLinkPass;

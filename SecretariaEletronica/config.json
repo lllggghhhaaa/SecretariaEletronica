@@ -1,9 +1,12 @@
 {
-  "token": "token",
-  "prefix": [ "!" ],
+  "token": "NzY1Njc2Njk5OTk1MDc4Njg3.X4YR_g.5o8HpDHZa4ilhRq3Q6RtKP0-KYI",
+  "prefix": [ "c!" ],
+  "log-ready": 885157844087865344,
+  "log-guild": 885157824945082481,
+  "log-commands": 885157905119182888,
   "lavalink-ip": "127.0.0.1",
   "lavalink-port": 2334,
   "lavalink-pass": "lavalinkpassword",
-  "rapid-api-key": "rapidapi key",
-  "mongo-url": "mongodb url C#"
+  "rapid-api-key": "56b7ff2fbcmsh85a7adb3f093c8cp1d8621jsn000adaf8bdf3",
+  "mongo-url": "mongodb://127.0.0.1:27017"
 }
