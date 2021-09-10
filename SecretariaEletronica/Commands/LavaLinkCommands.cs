@@ -20,7 +20,6 @@ using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 using DSharpPlus.Entities;
 using DSharpPlus.Lavalink;
-using DSharpPlus.Lavalink.EventArgs;
 
 namespace SecretariaEletronica.Commands
 {
@@ -62,7 +61,7 @@ namespace SecretariaEletronica.Commands
 
             await node.ConnectAsync(vstat.Channel);
             
-            node.GetGuildConnection(vstat.Channel.Guild).PlaybackFinished += (sender, args) => ConnOnPlaybackFinished(sender, args, false);;
+            node.GetGuildConnection(vstat.Channel.Guild).PlaybackFinished += (sender, _) => ConnOnPlaybackFinished(sender, false);
 
             await ctx.RespondAsync($"Joined {vstat.Channel.Name}!");
         }
@@ -133,7 +132,7 @@ namespace SecretariaEletronica.Commands
                 await node.ConnectAsync(channel);
                 conn = node.GetGuildConnection(channel?.Guild);
 
-                if (conn != null) conn.PlaybackFinished += (sender, args) => ConnOnPlaybackFinished(sender, args, false);
+                if (conn != null) conn.PlaybackFinished += (sender, _) => ConnOnPlaybackFinished(sender, false);
                 else return;
             }
 
@@ -191,6 +190,34 @@ namespace SecretariaEletronica.Commands
             await conn.PauseAsync();
         }
 
+        [Command("nowplaying"), Aliases("playing", "np")]
+        public async Task NowPlaying(CommandContext ctx)
+        {
+            if (ctx.Member.VoiceState == null || ctx.Member.VoiceState.Channel == null)
+            {
+                await ctx.RespondAsync("You are not in a voice channel.");
+                return;
+            }
+            
+            LavalinkExtension lava = ctx.Client.GetLavalink();
+            LavalinkNodeConnection node = lava.ConnectedNodes.Values.First();
+            LavalinkGuildConnection conn = node.GetGuildConnection(ctx.Member.VoiceState.Guild);
+            
+            if (conn == null)
+            {
+                await ctx.RespondAsync("Lavalink is not connected.");
+                return;
+            }
+
+            if (conn.CurrentState.CurrentTrack == null)
+            {
+                await ctx.RespondAsync("There are no tracks loaded.");
+                return;
+            }
+
+            await ctx.RespondAsync($"Now playing: `{_guildTracks[ctx.Guild.Id][0].Title}`");
+        }
+
         [Command("skip"), Description("Skip the track")]
         public async Task Skip(CommandContext ctx)
         {
@@ -216,7 +243,7 @@ namespace SecretariaEletronica.Commands
                 return;
             }
 
-            await ConnOnPlaybackFinished(conn, null, true);
+            await ConnOnPlaybackFinished(conn, true);
 
             await ctx.RespondAsync("Track skiped");
         }
@@ -241,7 +268,7 @@ namespace SecretariaEletronica.Commands
             await ctx.RespondAsync($"loop `{_loopMessage[enabled]}`");
         }
         
-        private async Task ConnOnPlaybackFinished(LavalinkGuildConnection sender, TrackFinishEventArgs e, bool forceSkip)
+        private async Task ConnOnPlaybackFinished(LavalinkGuildConnection sender, bool forceSkip)
         {
             ulong guildId = sender.Guild.Id;
             if (!_loopEnabled.ContainsKey(guildId)) _loopEnabled.Add(guildId, false);

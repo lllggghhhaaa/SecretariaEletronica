@@ -12,9 +12,18 @@
 //       See the License for the specific language governing permissions and
 //   limitations under the License.
 
+#define LAVALINK
+
+#if LAVALINK
+
+using DSharpPlus.Net;
+using System.Threading;
+using System.Diagnostics;
+
+#endif
+
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -22,7 +31,6 @@ using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Lavalink;
-using DSharpPlus.Net;
 using DSharpPlus.VoiceNext;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
@@ -36,23 +44,33 @@ namespace SecretariaEletronica
     public class Startup
     {
         public static DiscordShardedClient Client { get; private set; }
-        private static IMongoClient _mongoClient;
         public static IMongoDatabase Database { get; private set; }
         public static IReadOnlyDictionary<int, CommandsNextExtension> Commands { get; private set; }
         public static IReadOnlyDictionary<int, VoiceNextExtension> Voice { get; private set; }
         public static IReadOnlyDictionary<int, LavalinkExtension> LavaLink { get; private set; }
         public static ConfigJson Configuration { get; private set; }
         
+        private static IMongoClient _mongoClient;
+
         public async Task RunBotAsync()
         {
             // Run LavaLink
 
+#if LAVALINK
+
             Process llProcess = new Process()
             {
-                StartInfo = new ProcessStartInfo("java", $"-jar {Path.Combine(Directory.GetCurrentDirectory(), "Lavalink.jar")}")
+                StartInfo = new ProcessStartInfo("java",
+                    $"-jar {Path.Combine(Directory.GetCurrentDirectory(), "Lavalink.jar")}")
+                {
+                    RedirectStandardOutput = true
+                }
             };
-
             llProcess.Start();
+            
+            Thread.Sleep(5000);
+            
+#endif
 
             // Load configuration.
             
@@ -106,8 +124,14 @@ namespace SecretariaEletronica
                 foreach (string assemblyPath in assemblyList)
                 {
                     Assembly assembly = Assembly.LoadFile(assemblyPath);
+                    
                     Type type = assembly.GetType("SecretariaEletronica.CustomCommands.Main");
-                    typesToRegister.Add(type);
+                    if (type?.BaseType == typeof(BaseCommandModule)) typesToRegister.Add(type);
+
+                    MethodInfo methodInfo = type?.GetMethod("Load");
+                    object o = Activator.CreateInstance(type);
+
+                    methodInfo?.Invoke(o, new []{ Client });
                 }
             }
             
@@ -129,17 +153,24 @@ namespace SecretariaEletronica
                 
                 cmdNext.RegisterCommands<CustomCommands>();
                 cmdNext.RegisterCommands<DrawningCommands>();
-                cmdNext.RegisterCommands<LavaLinkCommands>();
                 cmdNext.RegisterCommands<MiscCommands>();
                 cmdNext.RegisterCommands<ModeratorCommands>();
-                cmdNext.RegisterCommands<VoiceCommands>();
                 cmdNext.RegisterCommands<WaxCommands>();
+
+#if LAVALINK
+                cmdNext.RegisterCommands<VoiceCommands>();
+                cmdNext.RegisterCommands<LavaLinkCommands>();
+#endif
                 
                 foreach (Type type in typesToRegister)
                 {
                     cmdNext.RegisterCommands(type);
                 }
             }
+            
+            await Client.StartAsync();
+
+#if LAVALINK
             
             // Setup LavaLink.
 
@@ -159,12 +190,12 @@ namespace SecretariaEletronica
             Voice = await Client.UseVoiceNextAsync(new VoiceNextConfiguration());
             LavaLink = await Client.UseLavalinkAsync();
 
-            await Client.StartAsync();
-
             foreach (LavalinkExtension lava in LavaLink.Values)
             {
                 await lava.ConnectAsync(lavalinkConfig);
             }
+
+#endif
             
             // Setup MongoDB.
 

@@ -97,6 +97,20 @@ namespace SecretariaEletronica.Commands
                     await ctx.RespondAsync("No text provided");
                     return;
                 }
+                
+                IReadOnlyList<DiscordUser> mentionedUsers = ctx.Message.MentionedUsers;
+                IReadOnlyList<DiscordRole> mentionedRoles = ctx.Message.MentionedRoles;
+
+                foreach (DiscordUser user in mentionedUsers)
+                {
+                    text = text.Replace($"<@!{user.Id}>", user.Username);
+                    text = text.Replace($"<@{user.Id}>", user.Username);
+                }
+
+                foreach (DiscordRole role in mentionedRoles)
+                {
+                    text = text.Replace($"<@&{role.Id}>", role.Name);
+                }
 
                 BsonDocument document = new BsonDocument
                 {

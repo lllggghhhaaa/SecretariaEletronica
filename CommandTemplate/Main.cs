@@ -13,6 +13,7 @@
 //   limitations under the License.
 
 using System.Threading.Tasks;
+using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
@@ -27,6 +28,11 @@ namespace SecretariaEletronica.CustomCommands
         public async Task Hello(CommandContext ctx)
         {
             await ctx.RespondAsync("hi");
+        }
+        
+        public void Load(DiscordShardedClient client)
+        {
+            // Add client events and etc.
         }
     }
 }

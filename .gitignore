@@ -1,2 +1,7 @@
 /SecretariaEletronica/bin/
+/SecretariaEletronica/obj/
+/SecretariaEletronica/config.json
+/SecretariaEletronica/application.yml
+/JoinWaxAnarchy/
 /CommandTemplate/bin/
+/CommandTemplate/obj/
