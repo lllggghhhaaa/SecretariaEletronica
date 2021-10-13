@@ -12,20 +12,18 @@
 //       See the License for the specific language governing permissions and
 //   limitations under the License.
 
-using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
 using Microsoft.Extensions.Logging;
 
-namespace SecretariaEletronica.Events.Client
-{
-    public class ClientErrored
-    {
-        public static Task Client_ClientErrored(DiscordClient client, ClientErrorEventArgs e)
-        {
-            client.Logger.LogError(EventIdent.BotEventId, e.Exception, "Exception occured");
+namespace SecretariaEletronica.Events.Client;
 
-            return Task.CompletedTask;
-        }
+public class ClientErrored
+{
+    public static Task Client_ClientErrored(DiscordClient client, ClientErrorEventArgs e)
+    {
+        client.Logger.LogError(EventIdent.BotEventId, e.Exception, "Exception occured");
+
+        return Task.CompletedTask;
     }
 }

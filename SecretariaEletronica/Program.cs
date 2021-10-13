@@ -12,10 +12,9 @@
 //       See the License for the specific language governing permissions and
 //   limitations under the License.
 
-namespace SecretariaEletronica
+namespace SecretariaEletronica;
+
+public class Program
 {
-    public class Program
-    {
-        public static void Main() => new Startup().RunBotAsync().GetAwaiter().GetResult();
-    }
+    public static void Main() => new Startup().RunBotAsync().GetAwaiter().GetResult();
 }

@@ -12,36 +12,34 @@
 //       See the License for the specific language governing permissions and
 //   limitations under the License.
 
-using System;
-using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace SecretariaEletronica.Events.Commands
+namespace SecretariaEletronica.Events.Commands;
+
+public class CommandExecuted
 {
-    public class CommandExecuted
+    public static async Task Commands_CommandExecuted(CommandsNextExtension commandsNext, CommandExecutionEventArgs e)
     {
-        public static async Task Commands_CommandExecuted(CommandsNextExtension commandsNext, CommandExecutionEventArgs e)
-        {
-            e.Context.Client.Logger.LogInformation(EventIdent.BotEventId, $"{e.Context.User.Username} successfully executed '{e.Command.QualifiedName}'");
+        e.Context.Client.Logger.LogInformation(EventIdent.BotEventId, $"{e.Context.User.Username} successfully executed '{e.Command.QualifiedName}'");
 
-            DiscordChannel channel = e.Context.Client.GetChannelAsync(Startup.Configuration.LogCommands).Result;
+        DiscordChannel channel = e.Context.Client.GetChannelAsync(Startup.Configuration.LogCommands).Result;
             
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder
+        DiscordEmbedBuilder embed = new DiscordEmbedBuilder
+        {
+            Title = "Command executed",
+            Description = $"Args: {e.Context.Message.Content}",
+            Timestamp = DateTimeOffset.Now,
+            Author = new DiscordEmbedBuilder.EmbedAuthor
             {
-                Title = "Command executed",
-                Description = $"Args: {e.Context.Message.Content}",
-                Timestamp = DateTimeOffset.Now,
-                Author = new DiscordEmbedBuilder.EmbedAuthor
-                {
-                    Name = e.Context.User.Username,
-                    IconUrl = e.Context.User.GetAvatarUrl(ImageFormat.Png)
-                }
-            };
+                Name = e.Context.User.Username,
+                IconUrl = e.Context.User.GetAvatarUrl(ImageFormat.Png)
+            }
+        };
 
+        if (e.Context.User.Id is not 597926883069394996)
             await channel.SendMessageAsync(embed.Build());
-        }
     }
 }

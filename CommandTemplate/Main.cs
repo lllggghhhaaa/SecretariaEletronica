@@ -12,27 +12,25 @@
 //       See the License for the specific language governing permissions and
 //   limitations under the License.
 
-using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
 
 // ReSharper disable once CheckNamespace
-namespace SecretariaEletronica.CustomCommands
-{ 
-    public class Main : BaseCommandModule
+namespace SecretariaEletronica.CustomCommands;
+
+public class Main : BaseCommandModule
+{
+    // Read command Attributes https://dsharpplus.github.io/articles/commands/command_attributes.html
+        
+    [Command("hello")]
+    public async Task Hello(CommandContext ctx)
     {
-        // Read command Attributes https://dsharpplus.github.io/articles/commands/command_attributes.html
+        await ctx.RespondAsync("hi");
+    }
         
-        [Command("hello")]
-        public async Task Hello(CommandContext ctx)
-        {
-            await ctx.RespondAsync("hi");
-        }
-        
-        public void Load(DiscordShardedClient client)
-        {
-            // Add client events and etc.
-        }
+    public void Load(DiscordShardedClient client)
+    {
+        // Add client events and etc.
     }
 }

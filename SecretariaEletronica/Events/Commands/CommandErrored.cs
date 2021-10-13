@@ -12,63 +12,60 @@
 //       See the License for the specific language governing permissions and
 //   limitations under the License.
 
-using System;
-using System.Threading.Tasks;
 using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Exceptions;
 using DSharpPlus.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace SecretariaEletronica.Events.Commands
+namespace SecretariaEletronica.Events.Commands;
+
+public class CommandErrored
 {
-    public class CommandErrored
+    public static async Task Commands_CommandErrored(CommandsNextExtension commandsNext, CommandErrorEventArgs e)
     {
-        public static async Task Commands_CommandErrored(CommandsNextExtension commandsNext, CommandErrorEventArgs e)
+        e.Context.Client.Logger.LogError(EventIdent.BotEventId, $"{e.Context.User.Username} tried executing '{e.Command?.QualifiedName ?? "<unknown command>"}' but it errored: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
+
+        if (e.Exception is ChecksFailedException)
         {
-            e.Context.Client.Logger.LogError(EventIdent.BotEventId, $"{e.Context.User.Username} tried executing '{e.Command?.QualifiedName ?? "<unknown command>"}' but it errored: {e.Exception.GetType()}: {e.Exception.Message}", DateTime.Now);
+            DiscordEmoji emoji = DiscordEmoji.FromName(e.Context.Client, ":no_entry:");
 
-            if (e.Exception is ChecksFailedException)
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder
             {
-                DiscordEmoji emoji = DiscordEmoji.FromName(e.Context.Client, ":no_entry:");
-
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder
-                {
-                    Title = "Access denied",
-                    Description = $"{emoji} You do not have the permissions required to execute this command.",
-                    Color = new DiscordColor(0xFF0000)
-                };
-                await e.Context.RespondAsync(embed.Build());
-            }
-            else if(e.Exception is CommandNotFoundException)
+                Title = "Access denied",
+                Description = $"{emoji} You do not have the permissions required to execute this command.",
+                Color = new DiscordColor(0xFF0000)
+            };
+            await e.Context.RespondAsync(embed.Build());
+        }
+        else if(e.Exception is CommandNotFoundException)
+        {
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder
             {
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder
-                {
-                    Title = "CommandNotFound",
-                    Description = "This command doesnt exist",
-                    Color = new DiscordColor(0xFF0000)
-                };
-                await e.Context.RespondAsync(embed.Build());
-            }
-            else if(e.Exception is DuplicateCommandException)
+                Title = "CommandNotFound",
+                Description = "This command doesnt exist",
+                Color = new DiscordColor(0xFF0000)
+            };
+            await e.Context.RespondAsync(embed.Build());
+        }
+        else if(e.Exception is DuplicateCommandException)
+        {
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder
             {
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder
-                {
-                    Title = "CommandAlreadyExist",
-                    Description = "This command already exists, please, change the attachment name",
-                    Color = new DiscordColor(0xFF0000)
-                };
-                await e.Context.RespondAsync(embed.Build());
-            }
-            else
+                Title = "CommandAlreadyExist",
+                Description = "This command already exists, please, change the attachment name",
+                Color = new DiscordColor(0xFF0000)
+            };
+            await e.Context.RespondAsync(embed.Build());
+        }
+        else
+        {
+            DiscordEmbedBuilder embed = new DiscordEmbedBuilder
             {
-                DiscordEmbedBuilder embed = new DiscordEmbedBuilder
-                {
-                    Title = "Error",
-                    Description = e.Exception.ToString(),
-                    Color = new DiscordColor(0xFF0000)
-                };
-                await e.Context.RespondAsync(embed.Build());
-            }
+                Title = "Error",
+                Description = e.Exception.ToString(),
+                Color = new DiscordColor(0xFF0000)
+            };
+            await e.Context.RespondAsync(embed.Build());
         }
     }
 }

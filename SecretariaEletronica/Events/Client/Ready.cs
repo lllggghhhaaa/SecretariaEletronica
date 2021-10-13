@@ -12,33 +12,29 @@
 //       See the License for the specific language governing permissions and
 //   limitations under the License.
 
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using Microsoft.Extensions.Logging;
 
-namespace SecretariaEletronica.Events.Client
+namespace SecretariaEletronica.Events.Client;
+
+public class Ready
 {
-    public class Ready
+    public static async Task Client_Ready(DiscordClient client, ReadyEventArgs e)
     {
-        public static async Task Client_Ready(DiscordClient client, ReadyEventArgs e)
+        client.Logger.LogInformation(EventIdent.BotEventId, "Client is ready to process events");
+
+        DiscordChannel channel = client.GetChannelAsync(Startup.Configuration.LogReady).Result;
+
+        DiscordEmbedBuilder embed = new DiscordEmbedBuilder
         {
-            client.Logger.LogInformation(EventIdent.BotEventId, "Client is ready to process events");
-
-            DiscordChannel channel = client.GetChannelAsync(Startup.Configuration.LogReady).Result;
-
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder
-            {
-                Title = "Ready",
-                Description = $"Ready at {client.Guilds.Values.Count()} guilds",
-                Timestamp = DateTimeOffset.Now,
-                Color = DiscordColor.Green
-            };
+            Title = "Ready",
+            Description = $"Ready at {client.Guilds.Values.Count()} guilds",
+            Timestamp = DateTimeOffset.Now,
+            Color = DiscordColor.Green
+        };
             
-            await channel.SendMessageAsync(embed.Build());
-        }
+        await channel.SendMessageAsync(embed.Build());
     }
 }

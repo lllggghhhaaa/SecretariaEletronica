@@ -12,29 +12,26 @@
 //       See the License for the specific language governing permissions and
 //   limitations under the License.
 
-using System;
-using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 
-namespace SecretariaEletronica.Events.Client
+namespace SecretariaEletronica.Events.Client;
+
+public static class GuildDeleted
 {
-    public static class GuildDeleted
+    public static async Task Client_GuildDeleted(DiscordClient client, GuildDeleteEventArgs args)
     {
-        public static async Task Client_GuildDeleted(DiscordClient client, GuildDeleteEventArgs args)
+        DiscordChannel channel = client.GetChannelAsync(Startup.Configuration.LogGuild).Result;
+
+        DiscordEmbedBuilder embed = new DiscordEmbedBuilder
         {
-            DiscordChannel channel = client.GetChannelAsync(Startup.Configuration.LogGuild).Result;
+            Title = "Guild Joined",
+            Description = $"-{args.Guild.MemberCount} {args.Guild.Name}",
+            Color = DiscordColor.Red,
+            Timestamp = DateTimeOffset.Now
+        };
 
-            DiscordEmbedBuilder embed = new DiscordEmbedBuilder
-            {
-                Title = "Guild Joined",
-                Description = $"-{args.Guild.MemberCount} {args.Guild.Name}",
-                Color = DiscordColor.Red,
-                Timestamp = DateTimeOffset.Now
-            };
-
-            await channel.SendMessageAsync(embed.Build());
-        }
+        await channel.SendMessageAsync(embed.Build());
     }
 }

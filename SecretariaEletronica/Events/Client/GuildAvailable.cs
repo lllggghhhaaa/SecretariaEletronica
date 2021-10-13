@@ -12,20 +12,18 @@
 //       See the License for the specific language governing permissions and
 //   limitations under the License.
 
-using System.Threading.Tasks;
 using DSharpPlus;
 using DSharpPlus.EventArgs;
 using Microsoft.Extensions.Logging;
 
-namespace SecretariaEletronica.Events.Client
+namespace SecretariaEletronica.Events.Client;
+
+public class GuildAvailable
 {
-    public class GuildAvailable
+    public static Task Client_GuildAvailable(DiscordClient client, GuildCreateEventArgs e)
     {
-        public static Task Client_GuildAvailable(DiscordClient client, GuildCreateEventArgs e)
-        {
-            client.Logger.LogInformation(EventIdent.BotEventId, $"Guild available: {e.Guild.Name}");
+        client.Logger.LogInformation(EventIdent.BotEventId, $"Guild available: {e.Guild.Name}");
             
-            return Task.CompletedTask;
-        }
+        return Task.CompletedTask;
     }
 }
